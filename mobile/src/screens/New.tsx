@@ -16,13 +16,13 @@ export function New() {
             <VStack mt={8} mx={5} alignItems='center'>
                 <Logo />
 
-                <Heading fontFamily='heading' color='white' fontSize='lg' my={8} textAlign='center'>
-                    Crie seu próprio bolão da copa {'\n'} e compartilhe entre amigos! 
+                <Heading fontFamily='heading' color='white' fontSize='xl' my={8} textAlign='center'>
+                    Crie seu próprio bolão da copa e compartilhe entre amigos! 
                 </Heading>
 
                 <Input 
                     mb={2}
-                    placeholder='Qual o nome do seu bolão'
+                    placeholder='Qual o nome do seu bolão?'
                 />
 
                 <Button
