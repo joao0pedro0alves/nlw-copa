@@ -10,7 +10,8 @@ import {
     Roboto_500Medium,
 } from '@expo-google-fonts/roboto'
 
-import {SignIn} from './src/screens/SignIn'
+// import {SignIn} from './src/screens/SignIn'
+import {New} from './src/screens/New'
 import {Loading} from './src/components/Loading'
 
 import {THEME} from './src/styles'
@@ -38,7 +39,7 @@ export default function App() {
                     translucent
                 />
 
-                {fontsLoaded ? <SignIn /> : <Loading />}
+                {fontsLoaded ? <New /> : <Loading />}
             </AuthContextProvider>
         </NativeBaseProvider>
     )
