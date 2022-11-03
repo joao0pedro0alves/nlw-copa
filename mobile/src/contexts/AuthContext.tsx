@@ -48,8 +48,8 @@ export function AuthContextProvider({children}: AuthProviderProps) {
         }
     }
 
-    async function signInWithGoogle(accessToken: string) {
-        console.log('TOKEN DE AUTHNETICAÇÃO ===>', accessToken)   
+    async function signInWithGoogle(access_token: string) {
+        console.log('TOKEN DE AUTHNETICAÇÃO ===>', access_token)   
     }
 
     useEffect(() => {
