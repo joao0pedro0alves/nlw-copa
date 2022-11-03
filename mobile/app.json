@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "nlwcopamobile",
+    "name": "NLWCOPA",
     "slug": "nlwcopamobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,8 +8,8 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#35875D"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
