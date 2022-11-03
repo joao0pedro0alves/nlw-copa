@@ -7,13 +7,14 @@ import {useAuth} from '../hooks/useAuth'
 import {Button} from '../components/Button'
 
 export function SignIn() {
-    const {signIn} = useAuth()
+    const { signIn, isUserLoading } = useAuth()
 
     return (
         <Center backgroundColor="gray.900" flex={1} p={7}>
             <Logo width={212} height={40} />
 
             <Button
+                isLoading={isUserLoading}
                 onPress={signIn}
                 type="SECONDARY"
                 title="Entrar com o google"
