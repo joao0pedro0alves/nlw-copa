@@ -1,34 +1,45 @@
-import { NativeBaseProvider, StatusBar } from "native-base"
+import {useEffect} from 'react'
+import {Platform} from 'react-native'
+import {NativeBaseProvider, StatusBar} from 'native-base'
+import * as NavigationBar from 'expo-navigation-bar'
+
 import {
     useFonts,
     Roboto_700Bold,
     Roboto_400Regular,
     Roboto_500Medium,
-} from "@expo-google-fonts/roboto"
+} from '@expo-google-fonts/roboto'
 
-import { SignIn } from "./src/screens/SignIn"
-import { Loading } from "./src/components/Loading"
+import {SignIn} from './src/screens/SignIn'
+import {Loading} from './src/components/Loading'
 
-import { THEME } from "./src/styles"
+import {THEME} from './src/styles'
+import {AuthContextProvider} from './src/contexts/AuthContext'
 
 export default function App() {
-    
     const [fontsLoaded] = useFonts({
         Roboto_700Bold,
         Roboto_400Regular,
         Roboto_500Medium,
     })
 
+    useEffect(() => {
+        if (Platform.OS === 'android') {
+            NavigationBar.setBackgroundColorAsync(THEME.colors.gray[800])
+        }
+    }, [])
+
     return (
         <NativeBaseProvider theme={THEME}>
-            
-            <StatusBar 
-                barStyle='light-content'
-                backgroundColor='transparent'
-                translucent
-            />
+            <AuthContextProvider>
+                <StatusBar
+                    barStyle="light-content"
+                    backgroundColor="transparent"
+                    translucent
+                />
 
-            {fontsLoaded ? <SignIn /> : <Loading />}
+                {fontsLoaded ? <SignIn /> : <Loading />}
+            </AuthContextProvider>
         </NativeBaseProvider>
     )
 }
