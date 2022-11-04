@@ -5,6 +5,7 @@ import * as WebBrowser from 'expo-web-browser'
 
 import {GOOGLE_OAUTH_CLIENT_ID} from '@env'
 import {api} from '../services/api'
+// import { exampleUser } from '../utils/user'
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -69,6 +70,7 @@ export function AuthContextProvider({children}: AuthProviderProps) {
     }
 
     useEffect(() => {
+        // setUser(exampleUser)
 
         if (response?.type === 'success' && response.authentication?.accessToken) {
             signInWithGoogle(response.authentication.accessToken)

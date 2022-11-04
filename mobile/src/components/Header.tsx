@@ -11,6 +11,7 @@ interface Props {
     showBackButton?: boolean
     showShareButton?: boolean
     backRoute?: keyof AppRootParamList
+    onShare?: () => Promise<void>
 }
 
 export function Header({
@@ -18,6 +19,7 @@ export function Header({
     showBackButton = false,
     showShareButton = false,
     backRoute,
+    onShare
 }: Props) {
     const { navigate, goBack } = useNavigation()
 
@@ -49,7 +51,7 @@ export function Header({
                 </Text>
 
                 {showShareButton ? (
-                    <ButtonIcon icon={Export} />
+                    <ButtonIcon onPress={onShare} icon={Export} />
                 ) : (
                     <EmptyBoxSpace />
                 )}
