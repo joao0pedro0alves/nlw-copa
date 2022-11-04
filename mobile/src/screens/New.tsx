@@ -1,11 +1,10 @@
 import {useState} from 'react'
 import {Heading, VStack, Text, useToast} from 'native-base'
 
-import Logo from '../assets/logo.svg'
-
 import {api} from '../services/api'
 
 import {Header} from '../components/Header'
+import {Logo} from '../components/Logo'
 import {Input} from '../components/Input'
 import {Button} from '../components/Button'
 

@@ -4,7 +4,6 @@ import {Octicons} from '@expo/vector-icons'
 import {useNavigation, useFocusEffect} from '@react-navigation/native'
 
 import {api} from '../services/api'
-import {examplePools} from '../utils/pools'
 
 import {Button} from '../components/Button'
 import {Header} from '../components/Header'
@@ -40,15 +39,9 @@ export function Pools() {
         }
     }
 
-    function fetchExamplePools() {
-        setPools(examplePools)
-        setIsLoading(false)
-    }
-
     useFocusEffect(
         useCallback(() => {
-            // fetchPools()
-            fetchExamplePools()
+            fetchPools()
         }, [])
     )
 

@@ -4,7 +4,6 @@ import {VStack, useToast, HStack} from 'native-base'
 import {useRoute} from '@react-navigation/native'
 
 import {api} from '../services/api'
-// import {examplePools} from '../utils/pools'
 
 import {Header} from '../components/Header'
 import {Loading} from '../components/Loading'
@@ -55,14 +54,8 @@ export function Details() {
         })
     }
 
-    // function fetchExamplePoolDetails() {
-    //     setIsLoading(false)
-    //     setPoolDetails(examplePools[0])
-    // }
-
     useEffect(() => {
         fetchPoolDetails()
-        // fetchExamplePoolDetails()
     }, [id])
 
     if (isLoading) {
