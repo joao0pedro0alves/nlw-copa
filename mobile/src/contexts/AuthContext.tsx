@@ -46,7 +46,7 @@ export function AuthContextProvider({children}: AuthProviderProps) {
             throw error
             
         } finally {
-            setIsUserLoading(true)
+            setIsUserLoading(false)
         }
     }
 
