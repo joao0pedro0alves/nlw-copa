@@ -1,12 +1,16 @@
 import Fastify from 'fastify'
+import bcrypt from 'fastify-bcrypt'
 import cors from '@fastify/cors'
 import jwt from '@fastify/jwt'
+import * as dotenv from "dotenv"
 
 import {authRoutes} from './routes/auth'
 import {gameRoutes} from './routes/game'
 import {guessRoutes} from './routes/guess'
 import {poolRoutes} from './routes/pool'
 import {userRoutes} from './routes/user'
+
+dotenv.config()
 
 async function bootstrap() {
     const fastify = Fastify({
@@ -18,7 +22,12 @@ async function bootstrap() {
     })
 
     await fastify.register(jwt, {
-        secret: 'nlwcopa',
+        secret: process.env.JWT_ACCESS_SECRET,
+    })
+    
+    await fastify.register(bcrypt, {
+        saltWorkFactor: 12,
+        prefix: process.env.JWT_ACCESS_SECRET
     })
 
     // Em produção isso precisa ser uma variavel de ambiente !!!
