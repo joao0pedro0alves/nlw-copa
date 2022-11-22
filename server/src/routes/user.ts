@@ -7,4 +7,21 @@ export async function userRoutes(fastify: FastifyInstance) {
 
         return {count}
     })
+
+    fastify.get('/users/popular', async () => {
+        const users = await prisma.user.findMany({
+            take: 4,
+            select: {
+                avatarUrl: true,
+                name: true,
+            },
+            orderBy: {
+                participatingAt: {
+                    _count: 'desc'
+                }
+            }
+        })
+
+        return {users}
+    })
 }
