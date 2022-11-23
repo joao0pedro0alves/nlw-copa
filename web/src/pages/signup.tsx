@@ -8,15 +8,23 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
 import logoImg from '../assets/logo.svg'
+import { api } from '../lib/axios'
 
 import { TextField } from '../components/TextField'
 import { Button } from '../components/Button'
 
-const createSessionSchema = z.object({
+interface FieldValues {
+    name: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+}
+
+const createUserSchema = z.object({
     name: z.string().min(6, 'Digite seu nome completo'),
     email: z.string().email('Insira um e-mail válido').min(2),
-    password: z.string().min(6),
-    password_confirmation: z.string().min(6)
+    password: z.string().min(6, 'Senha muito curta'),
+    password_confirmation: z.string().min(6, 'Senha muito curta')
 
 }).superRefine(({ password_confirmation, password }, ctx) => {
     if (password_confirmation !== password) {
@@ -28,15 +36,22 @@ const createSessionSchema = z.object({
     }
 })
 
-export default function Login() {
+export default function() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: zodResolver(createSessionSchema),
+    const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>({
+        resolver: zodResolver(createUserSchema),
         mode: 'onSubmit',
     })
 
-    function createSession(event: any) {
-        console.log(event)
+    async function createUser(data: FieldValues) {
+        try {
+
+            const response = await api.post('/users', data)
+            console.log(response.data)
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -54,7 +69,7 @@ export default function Login() {
 
                 <form
                     className="mt-10 flex flex-col gap-4"
-                    onSubmit={handleSubmit(createSession)}
+                    onSubmit={handleSubmit(createUser)}
                 >
                     <TextField
                         autoFocus
@@ -105,7 +120,6 @@ export default function Login() {
                     className="mt-4 text-sm font-bold text-yellow-700 hover:text-yellow-500 leading-relaxed flex gap-1 items-center"
                 >
                     <CaretLeft />
-
                     <span>Voltar para login</span>
                 </Link>
             </main>
