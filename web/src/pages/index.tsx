@@ -1,5 +1,5 @@
-import { useState, FormEvent } from 'react'
 import Image from 'next/image'
+import { useState, FormEvent } from 'react'
 
 import appPreviewImg from '../assets/app-nlw-copa-preview.png'
 import logoImg from '../assets/logo.svg'
@@ -7,6 +7,7 @@ import iconCheckImage from '../assets/icon-check.svg'
 
 import { api } from '../lib/axios'
 import { Avatars } from '../components/Avatars'
+import { PrivateRoute } from '../components/helper/PrivateRoute'
 
 interface HomeProps {
     poolCount: number
@@ -14,7 +15,7 @@ interface HomeProps {
     userCount: number
 }
 
-export default function Home(props: HomeProps) {
+export function Home(props: HomeProps) {
     const [poolTitle, setPoolTitle] = useState('')
 
     async function createPool(event: FormEvent) {
@@ -124,4 +125,4 @@ export const getStaticProps = async () => {
     }
 }
 
-// SSR: Server side rendering
+export default PrivateRoute(Home)

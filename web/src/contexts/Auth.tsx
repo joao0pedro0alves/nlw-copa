@@ -1,4 +1,5 @@
-import { ReactNode, createContext, useState } from 'react'
+import { ReactNode, createContext, useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 
 import { CURRENT_USER, TOKEN } from '../constants/storage'
@@ -19,6 +20,8 @@ export interface AuthContextDataProps {
     signIn: (data: SignInCredencials) => Promise<void>;
     signOut: () => void;
     isUserLoading: boolean;
+    isAuthenticated: boolean;
+    isFetched: boolean;
 }
 
 interface AuthProviderProps {
@@ -30,6 +33,24 @@ export const AuthContext = createContext({} as AuthContextDataProps)
 export function AuthContextProvider({children}: AuthProviderProps) {
     const [user, setUser] = useState<UserProps>({} as UserProps)
     const [isUserLoading, setIsUserLoading] = useState(false)
+    const [isFetched, setIsFetched] = useState(false)
+
+    const router = useRouter()
+
+    async function initializeStoragedUser() {
+        let user = {} as UserProps
+
+        const storageToken = localStorage.getItem(TOKEN)
+        const storageUser = localStorage.getItem(CURRENT_USER)
+
+        if (storageUser && storageToken) {
+            api.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(storageToken)}`
+            user = JSON.parse(storageUser)
+        }
+
+        setUser(user)
+        setIsFetched(true)
+    }
 
     async function signIn(data: SignInCredencials) {
         try {
@@ -47,13 +68,13 @@ export function AuthContextProvider({children}: AuthProviderProps) {
 
             localStorage.setItem(TOKEN, JSON.stringify(token))
             localStorage.setItem(CURRENT_USER, JSON.stringify(user))
+            
+            // Redirect to index
+            router.push('/')
 
         } catch (error: any) {
             const errorMessage = error?.response?.data.message
             toast.error(errorMessage)
-
-            // throw error
-            
         } finally {
             setIsUserLoading(false)
         }
@@ -65,13 +86,19 @@ export function AuthContextProvider({children}: AuthProviderProps) {
         setUser({} as UserProps)
     }
 
+    useEffect(() => {
+        initializeStoragedUser()
+    }, [])
+
     return (
         <AuthContext.Provider
             value={{
+                user,
+                isUserLoading,
+                isAuthenticated: Boolean(user.name),
+                isFetched,
                 signIn,
                 signOut,
-                isUserLoading,
-                user,
             }}
         >
             {children}
