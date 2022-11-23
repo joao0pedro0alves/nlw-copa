@@ -49,7 +49,7 @@ export default function Home(props: HomeProps) {
                     Crie seu próprio bolão da copa e compartilhe entre amigos!
                 </h1>
 
-                <Avatars peopleCount={props.userCount} />
+                <Avatars peoples={[]} peopleCount={props.userCount} />
 
                 <form className="mt-10 flex gap-2" onSubmit={createPool}>
                     <input

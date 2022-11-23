@@ -12,7 +12,7 @@ export function Avatars({ peopleCount, peoples }: Props) {
 
             <div className='relative flex items-center gap-1'>
 
-                {peoples.map((people, index) => {
+                {peoples?.map((people, index) => {
                     const zIndex = (index + 1) * 10
 
                     return (

@@ -12,6 +12,7 @@ import { api } from '../lib/axios'
 import { Avatars } from '../components/Avatars'
 import { TextField } from '../components/TextField'
 import { Button } from '../components/Button'
+import Link from 'next/link'
 
 interface LoginProps {
     poolCount: number
@@ -65,10 +66,13 @@ export default function Login(props: LoginProps) {
                     </Button>
                   </form>
 
-                <p className="mt-4 text-sm text-gray-300 leading-relaxed">
-                    Após criar seu bolão, você receberá um código único que
-                    poderá usar para convidar outras pessoas 🚀
-                </p>
+                <div className="mt-4 text-sm text-gray-300 leading-relaxed flex justify-center">
+                   Não tem uma conta?
+
+                   <Link className='ml-2 font-bold text-yellow-700 hover:text-yellow-500' href='/signup'>
+                        Registre-se
+                   </Link>
+                </div>
 
                 <div className="mt-10 pt-10 border-t border-gray-600 flex justify-between items-center text-gray-100">
                     <div className="flex items-center gap-6">
