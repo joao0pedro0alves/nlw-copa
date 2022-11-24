@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { EnvelopeSimple, User, LockSimple, CaretLeft } from 'phosphor-react'
+import { toast } from 'react-toastify'
 
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -37,20 +39,27 @@ const createUserSchema = z.object({
 })
 
 export default function() {
+    const [isLoading, setIsLoading] = useState(false)
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<FieldValues>({
         resolver: zodResolver(createUserSchema),
         mode: 'onSubmit',
     })
 
     async function createUser(data: FieldValues) {
         try {
+            setIsLoading(true)
 
-            const response = await api.post('/users', data)
-            console.log(response.data)
+            await api.post('/users', data)
+            toast.success('Usuário criado com sucesso!')
+
+            reset()
 
         } catch (error) {
             console.log(error)
+            toast.error('Falha ao criar o usuário, tente novamente.')
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -112,7 +121,7 @@ export default function() {
                         errors={errors}
                         {...register('password_confirmation')}
                     />
-                    <Button type="submit">Cadastrar</Button>
+                    <Button isLoading={isLoading} type="submit">Cadastrar</Button>
                 </form>
 
                 <Link
