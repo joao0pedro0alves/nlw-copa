@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react'
-import { useAuth } from '../hooks/useAuth'
+import * as Dialog from '@radix-ui/react-dialog'
+import { MagnifyingGlass } from 'phosphor-react'
 
 import { Pool } from '../@types'
+import { useAuth } from '../hooks/useAuth'
+import { api } from '../lib/axios'
 
 import { PrivateRoute } from '../components/helper/PrivateRoute'
 import { Button } from '../components/Button'
 import { Pools } from '../components/Pools'
-import { api } from '../lib/axios'
+import { CreatePool } from '../components/CreatePool'
+import { FindPool } from '../components/FindPool'
 
 export function Home() {
     const [myPools, setMyPools] = useState<Pool[]>([])
@@ -16,6 +20,8 @@ export function Home() {
 
     async function fetchMyPools() {
         try {
+            setIsLoading(true)
+
             const response = await api.get('/pools')
             setMyPools(response.data.pools)
             
@@ -49,17 +55,24 @@ export function Home() {
                 </div>
 
                 <div className='flex gap-4'>
-                    <Button variant='secondary'>
-                        Pesquisar bolão
-                    </Button>
+                    <Dialog.Root>
+                        <Button as={Dialog.Trigger} variant='secondary' className='flex gap-2 items-center'>
+                            <MagnifyingGlass weight='bold' size={16}/>
+                            Buscar bolão por código
+                        </Button>
+                        <FindPool onJoin={fetchMyPools} />
+                    </Dialog.Root>
 
-                    <Button>
-                        Novo bolão
-                    </Button>
+                    <Dialog.Root>    
+                        <Button as={Dialog.Trigger}>
+                            Novo bolão
+                        </Button>
+                        <CreatePool onCreate={fetchMyPools} />
+                    </Dialog.Root>
                 </div>
             </header>
 
-            <section className='bg-gray-900/80 rounded p-4 mt-14'>
+            <section className='bg-gray-900/20 rounded-lg p-4 mt-14'>
                 <Pools
                     isLoading={isLoading}
                     data={myPools}
