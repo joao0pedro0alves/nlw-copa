@@ -10,7 +10,9 @@ export default function Document() {
                 <link rel="shortcut icon" href="/favicon.png" />
                 <title>NLW COPA</title>
             </Head>
-            <body className="bg-gray-900 bg-app bg-no-repeat bg-cover">
+            <body 
+                className="bg-gray-900 bg-app bg-no-repeat bg-cover scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent scrollbar-corner-rounded-full"
+            >
                 <Main />
                 <NextScript />
             </body>

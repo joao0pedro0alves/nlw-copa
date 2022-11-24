@@ -5,9 +5,13 @@ import type { AppProps } from 'next/app'
 import { AuthContextProvider } from '../contexts/Auth'
 import { ToastContainer } from "react-toastify"
 
+import { Navbar } from '../components/Navbar'
+
 export default function App({ Component, pageProps }: AppProps) {
     return (
         <AuthContextProvider>
+            <Navbar />
+
             <Component {...pageProps} />
 
             <ToastContainer
