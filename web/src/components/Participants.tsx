@@ -17,7 +17,7 @@ export function Participants({ count, participants }: Props) {
                     return (
                         <div
                             key={id}
-                            className={`bg-yellow-700 border-yellow-500 border-4 flex items-center justify-center overflow-hidden w-10 h-10 rounded-full z-${zIndex} -ml-4 first:ml-0`}
+                            className={`bg-gray-800 border-gray-600 border-2 flex items-center justify-center overflow-hidden w-10 h-10 rounded-full z-${zIndex} -ml-4 first:ml-0`}
                             title={user.name}
                         >
                             {user.avatarUrl ? (

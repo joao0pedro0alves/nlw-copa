@@ -6,7 +6,7 @@ import logoImg from '../assets/logo.svg'
 import { useAuth } from '../hooks/useAuth'
 
 export function Navbar() {
-    const { isAuthenticated, user } = useAuth()
+    const { isAuthenticated, user, signOut } = useAuth()
 
     if (!isAuthenticated) return null
 
@@ -38,6 +38,7 @@ export function Navbar() {
 
                 <div className="w-[200px] flex gap-5 justify-end items-center">
                     <button
+                        onClick={signOut}
                         className={`bg-gray-800 border-gray-600 border-2 flex items-center justify-center overflow-hidden w-12 h-12 rounded-full`}
                     >
                         {user.avatarUrl ? (
