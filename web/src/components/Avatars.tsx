@@ -1,7 +1,7 @@
-import { PeopleWithAvatar } from '../@types'
+import { User } from '../@types'
 
 interface Props {
-    peoples: PeopleWithAvatar[]
+    peoples: User[]
     peopleCount: number
 }
 

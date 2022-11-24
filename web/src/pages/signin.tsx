@@ -11,7 +11,7 @@ import appPreviewImg from '../assets/app-nlw-copa-preview.png'
 import logoImg from '../assets/logo.svg'
 import iconCheckImage from '../assets/icon-check.svg'
 
-import { PeopleWithAvatar } from '../@types'
+import { User } from '../@types'
 import { api } from '../lib/axios'
 import { SignInCredencials } from '../contexts/Auth'
 import { useAuth } from '../hooks/useAuth'
@@ -24,7 +24,7 @@ interface LoginProps {
     poolCount: number
     guessCount: number
     userCount: number
-    popularUsers: PeopleWithAvatar[]
+    popularUsers: User[]
 }
 
 const signInSchema = z.object({

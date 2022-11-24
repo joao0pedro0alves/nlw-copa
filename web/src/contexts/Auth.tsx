@@ -2,13 +2,9 @@ import { ReactNode, createContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 
+import { User } from '../@types'
 import { CURRENT_USER, TOKEN } from '../constants/storage'
 import { api } from '../lib/axios'
-
-interface UserProps {
-    name: string;
-    avatarUrl: string;
-}
 
 export interface SignInCredencials {
     email: string;
@@ -16,7 +12,7 @@ export interface SignInCredencials {
 }
 
 export interface AuthContextDataProps {
-    user: UserProps;
+    user: User;
     signIn: (data: SignInCredencials) => Promise<void>;
     signOut: () => void;
     isUserLoading: boolean;
@@ -31,14 +27,14 @@ interface AuthProviderProps {
 export const AuthContext = createContext({} as AuthContextDataProps)
 
 export function AuthContextProvider({children}: AuthProviderProps) {
-    const [user, setUser] = useState<UserProps>({} as UserProps)
+    const [user, setUser] = useState<User>({} as User)
     const [isUserLoading, setIsUserLoading] = useState(false)
     const [isFetched, setIsFetched] = useState(false)
 
     const router = useRouter()
 
     async function initializeStoragedUser() {
-        let user = {} as UserProps
+        let user = {} as User
 
         const storageToken = localStorage.getItem(TOKEN)
         const storageUser = localStorage.getItem(CURRENT_USER)
@@ -83,7 +79,7 @@ export function AuthContextProvider({children}: AuthProviderProps) {
     function signOut() {
         localStorage.removeItem(TOKEN)
         localStorage.removeItem(CURRENT_USER)
-        setUser({} as UserProps)
+        setUser({} as User)
     }
 
     useEffect(() => {
