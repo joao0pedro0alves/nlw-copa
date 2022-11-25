@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import ptBR from 'dayjs/locale/pt-br'
@@ -8,8 +10,8 @@ import { Pool } from '../../@types'
 import { api } from '../../lib/axios'
 
 import { PrivateRoute } from '../../components/helper/PrivateRoute'
-import Head from 'next/head'
 import { Guesses } from '../../components/Guesses'
+import { Ranking } from '../../components/Ranking'
 
 export function Pool() {
     const [pool, setPool] = useState<Pool>({} as Pool)
@@ -94,9 +96,21 @@ export function Pool() {
             </header>
 
             <section>
-                <Guesses
-                    poolId={poolId as string}
-                />
+                <div 
+                    className={clsx({['hidden']: activeTab !== 'guesses'})}
+                >
+                    <Guesses
+                        poolId={poolId as string}
+                    />
+                </div>
+
+                <div 
+                    className={clsx({['hidden']: activeTab !== 'ranking'})}
+                >
+                    <Ranking
+                        participants={pool.participants}
+                    />
+                </div>
             </section>
         </main>               
     )

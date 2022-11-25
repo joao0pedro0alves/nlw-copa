@@ -19,7 +19,7 @@ export function Navbar() {
                     <Image src={logoImg} alt="NLW Copa" width={180} />
                 </Link>
 
-                <div className="flex justify-center flex-1 gap-4">
+                {/* <div className="flex justify-center flex-1 gap-4">
                     <Link
                         href="/"
                         className="text-yellow-500 px-2 block font-bold"
@@ -34,7 +34,7 @@ export function Navbar() {
                     <Link href="/ranking" className="text-gray-300 px-2 block">
                         Jogos
                     </Link>
-                </div>
+                </div> */}
 
                 <div className="w-[200px] flex gap-5 justify-end items-center">
                     <button

@@ -45,7 +45,7 @@ export function Game({
                 {when}
             </span>
 
-            <div className='mt-4 w-full flex justify-between items-center'>
+            <div className='mt-4 w-full flex gap-2 justify-between items-center'>
                 <Team
                     code={data.firstTeamCountryCode}
                     position="right"

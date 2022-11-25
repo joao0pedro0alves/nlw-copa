@@ -5,6 +5,7 @@ export interface User {
 
 export interface Participant {
     id: string
+    amountPoints: number
     user: User
 }
 
