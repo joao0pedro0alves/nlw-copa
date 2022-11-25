@@ -175,13 +175,18 @@ export async function poolRoutes(fastify: FastifyInstance) {
                     participants: {
                         select: {
                             id: true,
+                            amountPoints: true,
                             user: {
                                 select: {
+                                    name: true,
                                     avatarUrl: true,
                                 },
                             },
                         },
-                        take: 4,
+                        orderBy: {
+                            amountPoints: 'desc'
+                        }
+                        // take: 4,
                     },
                 },
             })
