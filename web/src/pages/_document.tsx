@@ -11,7 +11,7 @@ export default function Document() {
                 <title>NLW COPA</title>
             </Head>
             <body 
-                className="bg-gray-900 bg-app bg-no-repeat bg-cover scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent scrollbar-corner-rounded-full"
+                className="bg-gray-900 bg-app bg-no-repeat bg-cover apply-custom-scrollbar"
             >
                 <Main />
                 <NextScript />

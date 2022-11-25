@@ -93,7 +93,7 @@ export function Pool() {
                 </div>
             </header>
 
-            <section className='items-center grid grid-cols-2'>
+            <section>
                 <Guesses
                     poolId={poolId as string}
                 />

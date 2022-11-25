@@ -5,7 +5,7 @@ import { Game as IGame } from '../@types'
 import { api } from '../lib/axios'
 
 import { SoccerLoading } from './helper/SoccerLoading'
-import { Game } from './Game'
+import Game from './Game'
 
 interface GuessesProps {
     poolId: string
@@ -55,10 +55,12 @@ export function Guesses({ poolId }: GuessesProps) {
     }
 
     useEffect(() => {
-        fetchGames()
+        if (poolId) {
+            fetchGames()
+        }
     }, [poolId])
 
-    if (isLoading) {
+    if (isLoading && games.length === 0) {
         return (
             <SoccerLoading 
                 loadingText='Carregando jogos...'
@@ -67,7 +69,7 @@ export function Guesses({ poolId }: GuessesProps) {
     }
 
     return (
-        <div className="bg-gray-900/20 rounded-lg p-4 mt-14">
+        <div className="bg-gray-900/20 rounded-lg p-4 mt-14 max-h-[600px] overflow-auto apply-custom-scrollbar">
             {games.length === 0 ? (
                 <div className="text-center">
                     <span className="text-gray-300">
@@ -75,7 +77,7 @@ export function Guesses({ poolId }: GuessesProps) {
                     </span>
                 </div>
             ) : (
-                <ul>
+                <ul className='gap-4  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
                     {games.map(game => {
                         return (
                             <Game
