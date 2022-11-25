@@ -15,9 +15,9 @@ export function Navbar() {
 
             <div className="container m-auto flex items-center justify-between h-20 gap-4">
 
-                <div className='w-[200px]'>
+                <Link href='/' className='w-[200px]'>
                     <Image src={logoImg} alt="NLW Copa" width={180} />
-                </div>
+                </Link>
 
                 <div className="flex justify-center flex-1 gap-4">
                     <Link

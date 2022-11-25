@@ -13,7 +13,10 @@ export function PrivateRoute(WrappedComponent: any) {
             
             if (isFetched) {
                 if (isAuthenticated) {
-                    router.push('/')
+
+                    if (router.pathname === '/') {
+                        router.push('/')
+                    }
 
                 } else {
                     router.push('/signin?redirect=true')
