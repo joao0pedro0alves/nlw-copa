@@ -1,14 +1,21 @@
-import { useState } from 'react'
-
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
+import { EnvelopeSimple, LockSimple } from 'phosphor-react'
+
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
 
 import appPreviewImg from '../assets/app-nlw-copa-preview.png'
 import logoImg from '../assets/logo.svg'
 import iconCheckImage from '../assets/icon-check.svg'
 
-import { PeopleWithAvatar } from '../@types'
+import { User } from '../@types'
 import { api } from '../lib/axios'
+import { SignInCredencials } from '../contexts/Auth'
+import { useAuth } from '../hooks/useAuth'
+
 import { Avatars } from '../components/Avatars'
 import { TextField } from '../components/TextField'
 import { Button } from '../components/Button'
@@ -17,12 +24,21 @@ interface LoginProps {
     poolCount: number
     guessCount: number
     userCount: number
-    popularUsers: PeopleWithAvatar[]
+    popularUsers: User[]
 }
 
-export default function Login(props: LoginProps) {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+const signInSchema = z.object({
+    email: z.string().email('Insira um e-mail válido').min(2),
+    password: z.string().min(6, 'Senha muito curta'),
+})
+
+export default function(props: LoginProps) {
+    const { signIn, isUserLoading } = useAuth()
+
+    const { register, handleSubmit, formState: { errors } } = useForm<SignInCredencials>({
+        resolver: zodResolver(signInSchema),
+        mode: 'onSubmit',
+    })
 
     return (
         <div className="max-w-[1124px] h-screen mx-auto grid grid-cols-2 gap-28 items-center">
@@ -42,33 +58,42 @@ export default function Login(props: LoginProps) {
                     peopleCount={props.userCount} 
                 />
 
-                <form className="mt-10 flex flex-col gap-4">
+                <form 
+                    className="mt-10 flex flex-col gap-4"
+                    onSubmit={handleSubmit(signIn)}
+                >
                     <TextField
                         type="text"
                         required
                         placeholder="E-mail"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        icon={EnvelopeSimple}
+                        errors={errors}
+                        {...register('email')}
                     />
                     <TextField
                         autoComplete='current-password'
                         type="password"
                         required
                         placeholder="Senha"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        icon={LockSimple}
+                        errors={errors}
+                        {...register('password')}
                     />
                     <Button
+                        isLoading={isUserLoading}
                         type="submit"
                     >
                         Entrar
                     </Button>
                   </form>
 
-                <p className="mt-4 text-sm text-gray-300 leading-relaxed">
-                    Após criar seu bolão, você receberá um código único que
-                    poderá usar para convidar outras pessoas 🚀
-                </p>
+                <div className="mt-4 text-sm text-gray-300 leading-relaxed flex justify-center">
+                   Não tem uma conta?
+
+                   <Link className='ml-2 font-bold text-yellow-700 hover:text-yellow-500' href='/signup'>
+                        Registre-se
+                   </Link>
+                </div>
 
                 <div className="mt-10 pt-10 border-t border-gray-600 flex justify-between items-center text-gray-100">
                     <div className="flex items-center gap-6">
@@ -124,4 +149,3 @@ export const getStaticProps = async () => {
     }
 }
 
-// SSR: Server side rendering

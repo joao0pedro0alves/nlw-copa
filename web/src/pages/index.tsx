@@ -1,127 +1,85 @@
-import { useState, FormEvent } from 'react'
-import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import * as Dialog from '@radix-ui/react-dialog'
+import { MagnifyingGlass } from 'phosphor-react'
 
-import appPreviewImg from '../assets/app-nlw-copa-preview.png'
-import logoImg from '../assets/logo.svg'
-import iconCheckImage from '../assets/icon-check.svg'
-
+import { Pool } from '../@types'
+import { useAuth } from '../hooks/useAuth'
 import { api } from '../lib/axios'
-import { Avatars } from '../components/Avatars'
 
-interface HomeProps {
-    poolCount: number
-    guessCount: number
-    userCount: number
-}
+import { PrivateRoute } from '../components/helper/PrivateRoute'
+import { Button } from '../components/Button'
+import { Pools } from '../components/Pools'
+import { CreatePool } from '../components/CreatePool'
+import { FindPool } from '../components/FindPool'
 
-export default function Home(props: HomeProps) {
-    const [poolTitle, setPoolTitle] = useState('')
+export function Home() {
+    const [myPools, setMyPools] = useState<Pool[]>([])
+    const [isLoading, setIsLoading] = useState(true)
 
-    async function createPool(event: FormEvent) {
-        event.preventDefault()
+    const { user } = useAuth()
 
+    async function fetchMyPools() {
         try {
-            const response = await api.post('/pools', {
-                title: poolTitle,
-            })
+            setIsLoading(true)
 
-            const { code } = response.data
-
-            await navigator.clipboard.writeText(code)
-
-            alert(
-                'Bolão criado com sucesso, o código foi copiado para a área de transferência'
-            )
-
-            setPoolTitle('')
+            const response = await api.get('/pools')
+            setMyPools(response.data.pools)
+            
         } catch (error) {
             console.log(error)
-            alert('Falha ao criar o bolão, tente novamente!')
+
+        } finally {
+            setIsLoading(false)
         }
     }
 
+    useEffect(() => {
+        fetchMyPools()
+    }, [])
+
     return (
-        <div className="max-w-[1124px] h-screen mx-auto grid grid-cols-2 gap-28 items-center">
-            <main>
-                <Image src={logoImg} alt="NLW Copa" />
+        <main className='container mx-auto mt-28 py-10 px-4'>
 
-                <h1 className="mt-14 text-white text-5xl font-bold leading-tight">
-                    Crie seu próprio bolão da copa e compartilhe entre amigos!
-                </h1>
+            <header className='flex justify-between items-center'>
+                <div className='flex gap-10'>
+                    <span className='text-3xl text-gray-100 font-bold leading-relaxed'>Olá, {user.name}</span>
 
-                <Avatars peopleCount={props.userCount} />
-
-                <form className="mt-10 flex gap-2" onSubmit={createPool}>
-                    <input
-                        type="text"
-                        required
-                        placeholder="Qual nome do seu bolão?"
-                        className="flex-1 px-6 py-4 rounded bg-gray-800 border border-gray-600 text-sm text-gray-100"
-                        value={poolTitle}
-                        onChange={(e) => setPoolTitle(e.target.value)}
-                    />
-                    <button
-                        className="px-6 py-4 rounded bg-yellow-500 text-gray-900 font-bold text-sm uppercase hover:bg-yellow-700"
-                        type="submit"
-                    >
-                        Criar meu bolão
-                    </button>
-                </form>
-
-                <p className="mt-4 text-sm text-gray-300 leading-relaxed">
-                    Após criar seu bolão, você receberá um código único que
-                    poderá usar para convidar outras pessoas 🚀
-                </p>
-
-                <div className="mt-10 pt-10 border-t border-gray-600 flex justify-between items-center text-gray-100">
-                    <div className="flex items-center gap-6">
-                        <Image src={iconCheckImage} alt="" />
-                        <div className="flex flex-col">
-                            <span className="font-bold text-2xl">
-                                +{props.poolCount}
-                            </span>
-                            <span>Bolões criados</span>
-                        </div>
-                    </div>
-
-                    <div className="w-px h-14 bg-gray-600" />
-
-                    <div className="flex items-center gap-6">
-                        <Image src={iconCheckImage} alt="" />
-                        <div className="flex flex-col">
-                            <span className="font-bold text-2xl">
-                                +{props.guessCount}
-                            </span>
-                            <span>Palpites enviados</span>
-                        </div>
+                    <div>
+                        <p className='text-gray-300 text-md mb-2'>
+                            Bem vindo novamente!
+                        </p>
+                        <p className='text-gray-300 text-md mb-2'>
+                            Continue criando seus bolões, e ganhe de seus amigos.
+                        </p>
                     </div>
                 </div>
-            </main>
 
-            <Image
-                src={appPreviewImg}
-                alt="Dois celulares exibindo uma prévia da aplicação móvel do NLW Copa"
-                quality={100}
-            />
-        </div>
+                <div className='flex gap-4'>
+                    <Dialog.Root>
+                        <Button as={Dialog.Trigger} variant='secondary' className='flex gap-2 items-center'>
+                            <MagnifyingGlass weight='bold' size={16}/>
+                            Buscar bolão por código
+                        </Button>
+                        <FindPool onJoin={fetchMyPools} />
+                    </Dialog.Root>
+
+                    <Dialog.Root>    
+                        <Button as={Dialog.Trigger}>
+                            Novo bolão
+                        </Button>
+                        <CreatePool onCreate={fetchMyPools} />
+                    </Dialog.Root>
+                </div>
+            </header>
+
+            <section className='bg-gray-900/20 rounded-lg p-4 mt-14'>
+                <Pools
+                    isLoading={isLoading}
+                    data={myPools}
+                />
+            </section>
+        </main>               
     )
 }
 
-export const getStaticProps = async () => {
-    const [poolCountResponse, guessCountResponse, userCountResponse] =
-        await Promise.all([
-            api.get('pools/count'),
-            api.get('guesses/count'),
-            api.get('users/count'),
-        ])
-
-    return {
-        props: {
-            poolCount: poolCountResponse.data.count,
-            guessCount: guessCountResponse.data.count,
-            userCount: userCountResponse.data.count,
-        },
-    }
-}
-
-// SSR: Server side rendering
+export default PrivateRoute(Home)
