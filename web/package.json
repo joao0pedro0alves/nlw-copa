@@ -17,12 +17,14 @@
     "@types/react-dom": "18.0.8",
     "axios": "^1.1.3",
     "clsx": "^1.2.1",
+    "country-list": "^2.2.0",
     "dayjs": "^1.11.6",
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.1",
     "next": "13.0.1",
     "phosphor-react": "^1.4.1",
     "react": "18.2.0",
+    "react-country-flag": "^3.0.2",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.39.5",
     "react-loader-spinner": "^5.3.4",
@@ -31,6 +33,7 @@
     "zod": "^3.19.1"
   },
   "devDependencies": {
+    "@types/country-list": "^2.1.1",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.18",
     "tailwind-scrollbar": "^2.0.1",

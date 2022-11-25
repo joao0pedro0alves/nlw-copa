@@ -1,10 +1,12 @@
+import Link from 'next/link'
 import dayjs from 'dayjs'
 import ptBR from 'dayjs/locale/pt-br'
 import { Export, SignOut, SoccerBall } from 'phosphor-react'
 
 import { Pool } from '../@types'
 import { Participants } from './Participants'
-import { Tooltip } from './Tooltip'
+import { Tooltip } from './helper/Tooltip'
+import { SoccerLoading } from './helper/SoccerLoading'
 
 interface PoolsProps {
     data: Pool[]
@@ -19,12 +21,9 @@ export function Pools({ data, isLoading }: PoolsProps) {
 
     if (isLoading) {
         return (
-            <div className='min-h-[400px] flex items-center justify-center'>
-                <div className='flex flex-col gap-4 items-center'>
-                    <SoccerBall className='text-yellow-500 text-6xl animate-bounce' />
-                    <span className='text-yellow-500 leading-relaxed'>Carregando meus boloẽs...</span>
-                </div>
-            </div>
+            <SoccerLoading 
+                loadingText='Carregando meus boloẽs...'
+            />
         )
     }
 
@@ -51,9 +50,9 @@ export function Pools({ data, isLoading }: PoolsProps) {
 
                             <div className="flex gap-4 items-center">
                                 <Tooltip title='Detalhes do bolão'>
-                                    <button className="text-gray-100 text-2xl w-12 h-12 rounded-full bg-gray-600 flex items-center justify-center hover:bg-yellow-500 hover:text-gray-900 transition-colors">
+                                    <Link href={`/pools/${pool.id}`} className="text-gray-100 text-2xl w-12 h-12 rounded-full bg-gray-600 flex items-center justify-center hover:bg-yellow-500 hover:text-gray-900 transition-colors">
                                         <SoccerBall weight="bold" />
-                                    </button>
+                                    </Link>
                                 </Tooltip>
 
                                 <Tooltip title='Compartilhar bolão'>
