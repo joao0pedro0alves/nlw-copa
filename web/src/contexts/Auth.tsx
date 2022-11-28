@@ -2,10 +2,14 @@ import { ReactNode, createContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 
-import { User } from '../@types'
 import { CURRENT_USER, TOKEN } from '../constants/storage'
 import { api } from '../lib/axios'
 
+interface User {
+    sub: string
+    name: string
+    avatarUrl: string
+}
 export interface SignInCredencials {
     email: string;
     password: string;

@@ -15,9 +15,6 @@ export function Guesses({ poolId }: GuessesProps) {
     const [games, setGames] = useState<IGame[]>([])
     const [isLoading, setIsLoading] = useState(true)
 
-    const [firstTeamPoints, setFirstTeamPoints] = useState('')
-    const [secondTeamPoints, setSecondTeamPoints] = useState('')
-
     async function fetchGames() {
         try {
             setIsLoading(true)
@@ -33,11 +30,15 @@ export function Guesses({ poolId }: GuessesProps) {
         }
     }
 
-    async function handleGuessConfirm(gameId: string) {
+    async function handleGuessConfirm(
+        gameId: string,
+        firstTeamPoints: string,
+        secondTeamPoints: string
+    ) {
         try {
             if (!firstTeamPoints.trim() || !secondTeamPoints.trim()) {
                 toast.error('Informe o placar do jogo')
-                return 
+                return
             }
 
             await api.post(`/pools/${poolId}/games/${gameId}/guesses`, {
@@ -47,7 +48,6 @@ export function Guesses({ poolId }: GuessesProps) {
 
             toast.success('Palpite realizado com sucesso')
             fetchGames()
-
         } catch (error) {
             console.log(error)
             toast.error('Não foi possível enviar o palpite')
@@ -69,7 +69,7 @@ export function Guesses({ poolId }: GuessesProps) {
     }
 
     return (
-        <div className="bg-gray-900/20 rounded-lg p-4 mt-14 max-h-[600px] overflow-auto apply-custom-scrollbar">
+        <div className="bg-gray-900/20 rounded-lg p-4 mt-4 md:mt-14 max-h-[600px] overflow-auto apply-custom-scrollbar">
             {games.length === 0 ? (
                 <div className="text-center">
                     <span className="text-gray-300">
@@ -83,8 +83,6 @@ export function Guesses({ poolId }: GuessesProps) {
                             <Game
                                 key={game.id}
                                 data={game}
-                                setFirstTeamPoints={setFirstTeamPoints}
-                                setSecondTeamPoints={setSecondTeamPoints}
                                 onGuessConfirm={handleGuessConfirm}
                             />
                         )

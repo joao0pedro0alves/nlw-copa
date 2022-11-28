@@ -41,15 +41,15 @@ export default function(props: LoginProps) {
     })
 
     return (
-        <div className="max-w-[1124px] h-screen mx-auto grid grid-cols-2 gap-28 items-center">
+        <div className="max-w-[1124px] h-screen mx-auto p-4 lg:grid lg:grid-cols-2 lg:gap-28 lg:items-center">
             <Head>
                 <title>Crie seu próprio bolão da copa e compartilhe entre amigos!</title>
             </Head>
             
-            <main>
+            <main className='w-full'>
                 <Image src={logoImg} alt="NLW Copa" />
 
-                <h1 className="mt-14 text-white text-5xl font-bold leading-tight">
+                <h1 className="mt-14 text-white font-bold leading-tight text-3xl lg:text-5xl">
                     Crie seu próprio bolão da copa e compartilhe entre amigos!
                 </h1>
 
@@ -95,7 +95,7 @@ export default function(props: LoginProps) {
                    </Link>
                 </div>
 
-                <div className="mt-10 pt-10 border-t border-gray-600 flex justify-between items-center text-gray-100">
+                <div className="mt-10 pt-10 border-t border-gray-600 hidden justify-between items-center text-gray-100 lg:flex">
                     <div className="flex items-center gap-6">
                         <Image src={iconCheckImage} alt="" />
                         <div className="flex flex-col">
@@ -120,11 +120,15 @@ export default function(props: LoginProps) {
                 </div>
             </main>
 
-            <Image
-                src={appPreviewImg}
-                alt="Dois celulares exibindo uma prévia da aplicação móvel do NLW Copa"
-                quality={100}
-            />
+            <div
+                className='hidden lg:block'
+            >
+                <Image
+                    src={appPreviewImg}
+                    alt="Dois celulares exibindo uma prévia da aplicação móvel do NLW Copa"
+                    quality={100}
+                />
+            </div>
         </div>
     )
 }

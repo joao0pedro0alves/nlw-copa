@@ -1,10 +1,12 @@
 export interface User {
+    id: string
     name: string
     avatarUrl: string
 }
 
 export interface Participant {
     id: string
+    amountPoints: number
     user: User
 }
 
@@ -38,5 +40,7 @@ export interface Game {
     date: string
     firstTeamCountryCode: string
     secondTeamCountryCode: string
+    firstTeamGoals: number
+    secondTeamGoals: number
     guess: null | Guess
 }

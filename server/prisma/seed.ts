@@ -1,6 +1,4 @@
 import { PrismaClient } from '@prisma/client'
-import { createHash } from '../src/plugins/bcrypt'
-
 import { games } from '../mock/games'
 
 const prisma = new PrismaClient()

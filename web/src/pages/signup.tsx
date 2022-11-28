@@ -64,12 +64,12 @@ export default function() {
     }
 
     return (
-        <div className="max-w-[1124px] h-screen mx-auto flex items-center justify-center">
+        <div className="max-w-[1124px] h-screen mx-auto flex items-center justify-center p-4">
             <Head>
                 <title>Crie sua conta</title>
             </Head>
 
-            <main className="min-w-[450px]">
+            <main className="lg:min-w-[450px]">
                 <Image src={logoImg} alt="NLW Copa" />
 
                 <h1 className="mt-14 text-white text-3xl font-bold leading-tight">

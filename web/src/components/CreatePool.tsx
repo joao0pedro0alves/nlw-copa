@@ -40,8 +40,8 @@ export function CreatePool({onCreate}: CreatePoolProps) {
 
     return (
         <Dialog.Portal>
-            <Dialog.Overlay className="bg-black/50 inset-0 fixed z-20" />
-            <Dialog.Content className="flex flex-col fixed bg-gray-900 border-2 border-gray-600/60 py-8 px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg w-[800px] min-h-[400px] shadow-black/25 z-30">
+            <Dialog.Overlay className="bg-black/80 md:bg-black/50 inset-0 fixed z-20" />
+            <Dialog.Content className="flex flex-col fixed bg-gray-900 border-2 border-gray-600/60 py-8 px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg w-screen md:w-[800px] min-h-[400px] shadow-black/25 z-30">
                 <Dialog.Title className="text-3xl font-black">
                     Crie seu bolão
                 </Dialog.Title>

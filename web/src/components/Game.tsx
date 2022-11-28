@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, useState, useEffect } from 'react'
 import clsx from 'clsx'
 
 import { X } from 'phosphor-react'
@@ -11,19 +11,21 @@ import { Team } from './Team'
 
 interface Props {
     data: IGame
-    onGuessConfirm: (gameId: string) => Promise<void>
-    setFirstTeamPoints: (value: string) => void
-    setSecondTeamPoints: (value: string) => void
+    onGuessConfirm: (
+        gameId: string,
+        firstTeamPoints: string,
+        secondTeamPoints: string
+    ) => Promise<void>
 }
 
 export function Game({
     data,
-    setFirstTeamPoints,
-    setSecondTeamPoints,
     onGuessConfirm,
 }: Props) {
+    const [firstTeamPoints, setFirstTeamPoints] = useState('')
+    const [secondTeamPoints, setSecondTeamPoints] = useState('')
 
-    const when = dayjs(data.date).locale(ptBR).format("DD [de] MMMM [de] YYYY [às] H:00[h]")
+    const when = dayjs(data.date).locale(ptBR).format("DD [de] MMMM [de] YYYY") //  [às] H:00[h]
     
     const isFinish = new Date() > new Date(data.date)
     const isGuessed = data.guess !== null
@@ -32,6 +34,14 @@ export function Game({
         if (code.length > 2) return code
         else return getName(code)
     }
+
+    useEffect(() => {
+        if (data.guess) {
+            setFirstTeamPoints(data.guess.firstTeamPoints + '')
+            setSecondTeamPoints(data.guess.secondTeamPoints + '')
+        }
+
+    }, [data.guess])
 
     return (
         <li className='w-full bg-gray-800 rounded flex flex-col items-center p-4'>
@@ -45,13 +55,13 @@ export function Game({
                 {when}
             </span>
 
-            <div className='mt-4 w-full flex justify-between items-center'>
+            <div className='mt-4 w-full flex gap-2 justify-between items-center'>
                 <Team
                     code={data.firstTeamCountryCode}
                     position="right"
                     onChange={setFirstTeamPoints}
                     disabled={isFinish || isGuessed}
-                    defaultValue={data.guess?.firstTeamPoints}
+                    value={firstTeamPoints}
                 />
 
                 <X weight='bold' className='text-gray-300 text-2xl' />
@@ -61,9 +71,19 @@ export function Game({
                     position="left"
                     onChange={setSecondTeamPoints}
                     disabled={isFinish || isGuessed}
-                    defaultValue={data.guess?.secondTeamPoints}
+                    value={secondTeamPoints}
                 />
             </div>
+
+            {isFinish ? (
+                <div className='mt-4 flex gap-4 items-center'>
+                    <span className='text-white'>{data.firstTeamGoals}</span>
+
+                    <X weight='bold' className='text-gray-300 text-lg' />
+
+                    <span className='text-white'>{data.secondTeamGoals}</span>
+                </div>
+            ) : <div className="flex-1"></div> }
 
             <button
                 className={clsx(
@@ -73,7 +93,7 @@ export function Game({
                         ? 'bg-yellow-500 text-gray-900 pointer-events-none'
                         : 'bg-green-600 hover:bg-green-700 text-white',
                 )}
-                onClick={() => onGuessConfirm(data.id)}
+                onClick={() => onGuessConfirm(data.id, firstTeamPoints, secondTeamPoints)}
                 disabled={isFinish}
             >
                 {isGuessed ? (
@@ -86,6 +106,7 @@ export function Game({
                     </span>
                 )}
             </button>
+
         </li>
     )
 }
