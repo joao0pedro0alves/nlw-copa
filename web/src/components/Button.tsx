@@ -22,6 +22,7 @@ export function Button({
 
     return (
         <Component
+            {...props}
             className={clsx(
                 'relative h-12 px-6 py-4 rounded font-bold text-sm uppercase',
                 isSecondary
