@@ -11,9 +11,11 @@ import { SoccerLoading } from './helper/SoccerLoading'
 interface PoolsProps {
     data: Pool[]
     isLoading: boolean
+    onShare: (poolCode: string) => Promise<void>
+    onOut: (poolId: string) => Promise<void>
 }
 
-export function Pools({ data, isLoading }: PoolsProps) {
+export function Pools({ data, isLoading, onShare, onOut }: PoolsProps) {
     const when = (createdAt: string) =>
         dayjs(createdAt)
             .locale(ptBR)
@@ -34,13 +36,13 @@ export function Pools({ data, isLoading }: PoolsProps) {
                     return (
                         <li
                             key={pool.id}
-                            className="border-b border-gray-600 py-4 px-4 flex gap-10 items-center"
+                            className="border-b-2 border-yellow-500 flex flex-col gap-5 py-4 lg:border-gray-600 lg:px-4 lg:flex-row lg:gap-10 lg:items-center"
                         >
                             <div className="flex flex-col flex-1">
                                 <span className="text-gray-100 font-bold text-2xl mb-2">
                                     {pool.title}
                                 </span>
-                                <span className="block mb-1 font-bold text-sm text-gray-300">
+                                <span className="block mb-1 text-sm text-gray-300">
                                     Criado por {pool.owner.name}
                                 </span>
                                 <span className="text-sm text-gray-300">
@@ -56,19 +58,25 @@ export function Pools({ data, isLoading }: PoolsProps) {
                                 </Tooltip>
 
                                 <Tooltip title='Compartilhar bolão'>
-                                    <button className="text-gray-100 text-2xl w-12 h-12 rounded-full bg-gray-600 flex items-center justify-center hover:bg-yellow-500 hover:text-gray-900 transition-colors">
+                                    <button 
+                                        className="text-gray-100 text-2xl w-12 h-12 rounded-full bg-gray-600 flex items-center justify-center hover:bg-yellow-500 hover:text-gray-900 transition-colors"
+                                        onClick={() => onShare(pool.code)}
+                                    >
                                         <Export weight="bold" />
                                     </button>
                                 </Tooltip>
 
                                 <Tooltip title='Sair do bolão'>
-                                    <button className="text-gray-100 text-2xl w-12 h-12 rounded-full bg-gray-600 flex items-center justify-center hover:bg-yellow-500 hover:text-gray-900 transition-colors">
+                                    <button 
+                                        className="text-gray-100 text-2xl w-12 h-12 rounded-full bg-gray-600 flex items-center justify-center hover:bg-yellow-500 hover:text-gray-900 transition-colors"
+                                        onClick={() => onOut(pool.id)}
+                                    >
                                         <SignOut weight="bold" />
                                     </button>
                                 </Tooltip>
                             </div>
 
-                            <div className='min-w-[200px] flex justify-end'>
+                            <div className='min-w-[200px] flex lg:justify-end'>
                                 <Participants
                                     participants={pool.participants}
                                     count={pool._count.participants}
