@@ -1,12 +1,16 @@
-import { CrownSimple } from 'phosphor-react'
 import clsx from 'clsx'
+import { CrownSimple } from 'phosphor-react'
+
 import { Participant } from '../@types'
+import { useAuth } from '../hooks/useAuth'
 
 interface RankingProps {
     participants: Participant[]
 }
 
-export function Ranking({ participants = [] }: RankingProps) {
+export function Ranking({ participants = [], }: RankingProps) {
+    const { user } = useAuth()
+
     return (
         <div className="bg-gray-900/20 rounded-lg p-4 mt-14 mx-auto max-h-[600px] overflow-auto apply-custom-scrollbar">
             {participants.length === 0 ? (
@@ -28,7 +32,10 @@ export function Ranking({ participants = [] }: RankingProps) {
                         const isFinalist = ranking < 4
 
                         return (
-                            <li className="bg-gray-800 rounded border-b-2 border-yellow-500 py-4 px-4 flex gap-4 items-center">
+                            <li 
+                                className="bg-gray-800 rounded border-b-2 border-yellow-500 py-4 px-4 flex gap-6 items-center"
+                                key={participant.id}
+                            >
                                 
                                 <div className='relative'>
                                     {participant.user.avatarUrl ? (
@@ -55,6 +62,10 @@ export function Ranking({ participants = [] }: RankingProps) {
                                 <div className='flex-1'>
                                     <span className='block text-lg font-bold text-white'>
                                         {participant.user.name}
+
+                                        {user.sub === participant.user.id && (
+                                            <span className='ml-2 font-normal text-gray-300 text-sm'>(você)</span>
+                                        )}
                                     </span>
                                     <span className='block text-sm text-gray-300'>
                                         {participant.amountPoints} ponto(s)

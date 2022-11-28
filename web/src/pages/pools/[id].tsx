@@ -15,8 +15,6 @@ import { Ranking } from '../../components/Ranking'
 
 export function Pool() {
     const [pool, setPool] = useState<Pool>({} as Pool)
-    const [_, setLoading] = useState(true)
-    
     const [activeTab, setActiveTab] = useState<'guesses' | 'ranking'>('guesses')
 
     const router = useRouter()
@@ -24,21 +22,18 @@ export function Pool() {
 
     async function fetchPool() {
         try {
-            
-            const response = await api.get(`/pools/${router.query.id}`)
+            await api.post(`/pools/${poolId}/calculate`)
+
+            const response = await api.get(`/pools/${poolId}`)
             setPool(response.data.pool)
 
         } catch (error) {
             console.log(error)
-        } finally {
-            setLoading(false)
         }
     }
 
     useEffect(() => {
-        if (poolId) {
-            fetchPool()
-        }
+        if (poolId) fetchPool()
     }, [poolId])
 
     const when = dayjs(pool?.createdAt).locale(ptBR).format('DD [de] MMMM [de] YYYY [às] H:00[h]')

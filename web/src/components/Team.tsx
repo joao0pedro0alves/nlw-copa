@@ -5,10 +5,10 @@ interface TeamProps {
     position: 'left' | 'right'
     onChange: (value: string) => void
     disabled: boolean,
-    defaultValue?: string | number
+    value: string
 }
 
-export function Team({ code, position, disabled, defaultValue, onChange }: TeamProps) {
+export function Team({ code, position, disabled, value, onChange }: TeamProps) {
     const isAvailable = code.length === 2
 
     return (
@@ -25,9 +25,9 @@ export function Team({ code, position, disabled, defaultValue, onChange }: TeamP
 
             <input
                 className="w-full text-sm font-bold text-gray-100 px-4 py-4 rounded bg-gray-600 border border-gray-600 focus:outline-none focus:border-yellow-700 transition-colors disabled:bg-gray-500"
-                onChange={e => onChange(e.target.value)}
                 disabled={disabled}
-                defaultValue={defaultValue}
+                value={value}
+                onChange={e => onChange(e.target.value)}
             />
 
             {isAvailable && position === 'right' && (
