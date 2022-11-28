@@ -12,7 +12,7 @@ export function Ranking({ participants = [], }: RankingProps) {
     const { user } = useAuth()
 
     return (
-        <div className="bg-gray-900/20 rounded-lg p-4 mt-14 mx-auto max-h-[600px] overflow-auto apply-custom-scrollbar">
+        <div className="bg-gray-900/20 rounded-lg p-4 mt-4 md:mt-14 mx-auto max-h-[600px] overflow-auto apply-custom-scrollbar">
             {participants.length === 0 ? (
                 <div className="text-center">
                     <span className="text-gray-300">
@@ -39,8 +39,8 @@ export function Ranking({ participants = [], }: RankingProps) {
                                 
                                 <div className='relative'>
                                     {participant.user.avatarUrl ? (
-                                        <img 
-                                            className='border-2 border-yellow-500 w-16 h-16 rounded-full' 
+                                        <img
+                                            className='border-2 border-yellow-500 w-12 h-12 lg:w-16 lg:h-16 rounded-full' 
                                             src={participant.user.avatarUrl} alt="" 
                                         />
                                     ) : (
@@ -54,13 +54,13 @@ export function Ranking({ participants = [], }: RankingProps) {
                                     {isChampion && (
                                         <CrownSimple
                                             weight='fill' 
-                                            className='text-yellow-500 text-4xl absolute -top-6 left-1 -rotate-12'
+                                            className='text-yellow-500 text-3xl -top-5 absolute lg:text-4xl lg:-top-6 left-1 -rotate-12'
                                         />
                                     )}
                                 </div>
 
                                 <div className='flex-1'>
-                                    <span className='block text-lg font-bold text-white'>
+                                    <span className='block text-sm md:text-md lg:text-lg font-bold text-white'>
                                         {participant.user.name}
 
                                         {user.sub === participant.user.id && (
@@ -78,7 +78,7 @@ export function Ranking({ participants = [], }: RankingProps) {
                                         isFinalist ? 'bg-yellow-500 text-gray-900' : 'bg-gray-600 text-gray-300'
                                     )}
                                 >
-                                    <span className='font-bold text-lg'>
+                                    <span className='font-bold text-sm md:text-md lg:text-lg'>
                                         {index + 1}º
                                     </span>
                                 </div>

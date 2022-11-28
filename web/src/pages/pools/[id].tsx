@@ -44,8 +44,8 @@ export function Pool() {
                 <title>{pool?.title}</title>
             </Head>
 
-            <header className='flex justify-between items-center'>
-                <div className='flex gap-10'>
+            <header className='flex gap-4 flex-col justify-between items-center lg:flex-row'>
+                <div className='flex flex-col gap-10 lg:flex-row'>
                     <div className='flex flex-col'>
                         <span className='text-3xl text-gray-100 font-bold leading-tight'>
                             {pool?.title}
@@ -56,10 +56,10 @@ export function Pool() {
                     </div>
 
                     <div>
-                        <p className='text-gray-300 text-md mb-2'>
+                        <p className='text-gray-300 text-sm lg:text-md mb-2'>
                             Criado por {pool?.owner?.name}
                         </p>
-                        <p className='text-gray-300 text-md mb-2'>
+                        <p className='text-gray-300 text-sm lg:text-md mb-2'>
                             Criado em {when}
                         </p>
                     </div>
@@ -69,7 +69,7 @@ export function Pool() {
                     className='flex text-white rounded font-bold text-sm border border-gray-700 divide-x-2 divide-gray-600'
                 >
                     <button 
-                        className={clsx('uppercase px-6 py-4 h-12 hover:bg-gray-600', {
+                        className={clsx('text-xs md:text-md uppercase px-6 py-4 h-12 hover:bg-gray-600', {
                             ['bg-gray-600']: activeTab === 'guesses'
                         })}
                         onClick={() => setActiveTab('guesses')}
@@ -79,7 +79,7 @@ export function Pool() {
                     </button>
 
                     <button 
-                        className={clsx('uppercase px-6 py-4 h-12 hover:bg-gray-600', {
+                        className={clsx('text-xs md:text-md uppercase px-6 py-4 h-12 hover:bg-gray-600', {
                             ['bg-gray-600']: activeTab === 'ranking'
                         })}
                         onClick={() => setActiveTab('ranking')}

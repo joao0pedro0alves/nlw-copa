@@ -11,7 +11,7 @@ export function Navbar() {
     if (!isAuthenticated) return null
 
     return (
-        <nav className="bg-gray-900/40 border-b border-gray-800 fixed top-0 w-full px-4">
+        <nav className="bg-gray-900 md:bg-gray-900/40 border-b border-gray-800 fixed top-0 w-full px-4">
 
             <div className="container m-auto flex items-center justify-between h-20 gap-4">
 

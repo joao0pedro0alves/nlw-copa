@@ -69,7 +69,7 @@ export function Guesses({ poolId }: GuessesProps) {
     }
 
     return (
-        <div className="bg-gray-900/20 rounded-lg p-4 mt-14 max-h-[600px] overflow-auto apply-custom-scrollbar">
+        <div className="bg-gray-900/20 rounded-lg p-4 mt-4 md:mt-14 max-h-[600px] overflow-auto apply-custom-scrollbar">
             {games.length === 0 ? (
                 <div className="text-center">
                     <span className="text-gray-300">
