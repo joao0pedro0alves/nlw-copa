@@ -3,7 +3,9 @@ import { prisma } from '../lib/prisma'
 
 import shortUniqueId from 'short-unique-id'
 import { z } from 'zod'
+
 import { authenticate } from '../plugins/authenticate'
+import { calculatePoints } from '../utils/calculatePoints'
 
 export async function poolRoutes(fastify: FastifyInstance) {
     fastify.post('/pools', async (request, reply) => {
@@ -43,6 +45,49 @@ export async function poolRoutes(fastify: FastifyInstance) {
 
         return reply.status(201).send({ code })
     })
+
+    fastify.post(
+        '/pools/:id/calculate',
+        { onRequest: [authenticate] },
+        async (request, reply) => {
+
+            const getPoolParams = z.object({
+                id: z.string(),
+            })
+
+            const { id } = getPoolParams.parse(request.params)
+
+            const participant = await prisma.participant.findUnique({
+                where: {
+                    userId_poolId: {
+                        poolId: id,
+                        userId: request.user.sub
+                    },
+                },
+                include: {
+                    guesses: true
+                }
+            })
+
+            if (participant) {
+                const participantAmountPoints = await calculatePoints(participant.guesses)
+    
+                await prisma.participant.update({
+                        where: {
+                            userId_poolId: {
+                                poolId: id,
+                                userId: request.user.sub
+                            }
+                        },
+                        data: {
+                            amountPoints: participantAmountPoints
+                        }
+                    })
+    
+                return reply.status(200).send()
+            }
+        }
+    )
 
     fastify.post(
         '/pools/join',
@@ -178,6 +223,7 @@ export async function poolRoutes(fastify: FastifyInstance) {
                             amountPoints: true,
                             user: {
                                 select: {
+                                    id: true,
                                     name: true,
                                     avatarUrl: true,
                                 },
