@@ -46,6 +46,56 @@ export async function poolRoutes(fastify: FastifyInstance) {
         return reply.status(201).send({ code })
     })
 
+    fastify.delete(
+        '/pools/:id/out',
+        { onRequest: [authenticate] },
+        async (request, reply) => {
+
+            const getPoolParams = z.object({
+                id: z.string(),
+            })
+
+            const { id } = getPoolParams.parse(request.params)
+
+            const participant = await prisma.participant.findUnique({
+                where: {
+                    userId_poolId: {
+                        poolId: id,
+                        userId: request.user.sub
+                    }
+                }
+            })
+
+            if (participant) {
+
+                await prisma.guess.deleteMany({
+                    where: {
+                        participantId: {
+                            equals: participant.id,
+                        },
+                    },
+                })
+
+                await prisma.participant.delete({
+                    where: {
+                        userId_poolId: {
+                            poolId: id,
+                            userId: request.user.sub
+                        }
+                    }
+                })
+
+                return reply.status(200).send()
+
+            } else {
+                return reply.status(400).send({
+                    message: 'You are not part of this pool',
+                })
+            }
+
+        }
+    )
+
     fastify.post(
         '/pools/:id/calculate',
         { onRequest: [authenticate] },

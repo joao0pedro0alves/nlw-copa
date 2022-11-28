@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -15,67 +12,58 @@ datasource db {
 }
 
 model Pool {
-  id        String   @id @default(cuid())
-  title     String
-  code      String   @unique
-  createdAt DateTime @default(now())
-  ownerId   String?
-
-  participants Participant[]
+  id           String        @id @default(cuid())
+  title        String
+  code         String        @unique
+  createdAt    DateTime      @default(now())
+  ownerId      String?
   owner        User?         @relation(fields: [ownerId], references: [id])
+  participants Participant[]
 }
 
 model Participant {
-  id     String @id @default(cuid())
-  userId String
-  poolId String
-
-  amountPoints Int? @default(0)
-
-  guesses Guess[]
-  user    User    @relation(fields: [userId], references: [id])
-  pool    Pool    @relation(fields: [poolId], references: [id])
+  id           String  @id @default(cuid())
+  userId       String
+  poolId       String
+  amountPoints Int?    @default(0)
+  pool         Pool    @relation(fields: [poolId], references: [id])
+  user         User    @relation(fields: [userId], references: [id])
+  guesses      Guess[]
 
   @@unique([userId, poolId])
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  password  String?
-  googleId  String?  @unique
-  avatarUrl String?
-  createdAt DateTime @default(now())
-
+  id              String        @id @default(cuid())
+  name            String
+  email           String        @unique
+  avatarUrl       String?
+  createdAt       DateTime      @default(now())
+  googleId        String?       @unique
+  password        String?
   participatingAt Participant[]
   ownPools        Pool[]
 }
 
 model Game {
-  id   String   @id @default(cuid())
-  date DateTime
-
+  id                    String   @id @default(cuid())
+  date                  DateTime
   firstTeamCountryCode  String
   secondTeamCountryCode String
-
-  firstTeamGoals  Int?
-  secondTeamGoals Int?
-
-  guesses Guess[]
+  firstTeamGoals        Int?
+  secondTeamGoals       Int?
+  guesses               Guess[]
 }
 
 model Guess {
-  id String @id @default(cuid())
-
+  id               String      @id @default(cuid())
   firstTeamPoints  Int
   secondTeamPoints Int
-  createdAt        DateTime @default(now())
+  createdAt        DateTime    @default(now())
   gameId           String
   participantId    String
-
-  participant Participant @relation(fields: [participantId], references: [id])
-  game        Game        @relation(fields: [gameId], references: [id])
+  game             Game        @relation(fields: [gameId], references: [id])
+  participant      Participant @relation(fields: [participantId], references: [id])
 
   @@unique([participantId, gameId])
 }
