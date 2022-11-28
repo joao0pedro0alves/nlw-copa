@@ -24,7 +24,7 @@ export function Button({
         <Component
             {...props}
             className={clsx(
-                'relative h-12 px-6 py-4 rounded font-bold text-sm uppercase',
+                'text-xs relative px-6 py-4 rounded font-bold md:h-12 md:text-sm uppercase',
                 isSecondary
                     ? 'text-white border border-gray-700 bg-gray-900 hover:bg-gray-800'
                     : 'text-gray-900 bg-yellow-500 hover:bg-yellow-700',
