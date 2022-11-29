@@ -31,7 +31,6 @@ export function CreatePool({onCreate}: CreatePoolProps) {
             setTitle('')
             onCreate()
         } catch (error) {
-            console.log(error)
             toast.error('Falha ao criar o bolão, tente novamente!')
         } finally {
             setIsLoading(false)

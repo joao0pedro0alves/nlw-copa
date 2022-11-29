@@ -38,8 +38,6 @@ export function New() {
             setPoolTitle('')
 
         } catch (error) {
-            console.log(error)
-
             toast.show({
                 title: 'Não foi possível criar o bolão',
                 placement: 'top',

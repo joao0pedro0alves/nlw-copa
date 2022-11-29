@@ -26,8 +26,6 @@ export function Pools() {
             setPools(response.data.pools)
             
         } catch (error) {
-            console.log(error)
-
             toast.show({
                 title: 'Não foi possível carregar os bolões',
                 placement: 'top',

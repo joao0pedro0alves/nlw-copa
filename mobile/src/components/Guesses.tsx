@@ -29,8 +29,6 @@ export function Guesses({poolId}: Props) {
             setGames(response.data.games)
             
         } catch (error) {
-            console.log(error)
-
             toast.show({
                 title: 'Não foi possível carregar os bolões',
                 placement: 'top',
@@ -67,8 +65,6 @@ export function Guesses({poolId}: Props) {
             fetchGames()
             
         } catch (error) {
-            console.log(error)
-
             toast.show({
                 title: 'Não foi possível enviar o palpite',
                 placement: 'top',
