@@ -17,7 +17,7 @@ export function Avatars({ peopleCount, peoples }: Props) {
                     return (
                         <div
                             key={index}
-                            className={`bg-gray-800 border-gray-900 border-4 flex items-center justify-center overflow-hidden w-12 h-12 rounded-full z-${zIndex} -ml-4 first:ml-0`}
+                            className={`bg-gray-800 border-gray-900 border-2 flex items-center justify-center overflow-hidden w-12 h-12 rounded-full z-${zIndex} -ml-4 first:ml-0`}
                             title={people.name}
                         >
                             {people.avatarUrl ? (
