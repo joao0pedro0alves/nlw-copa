@@ -64,9 +64,10 @@ export async function authRoutes(fastify: FastifyInstance) {
             name: z.string(),
             email: z.string().email(),
             password: z.string().min(6),
+            avatar_url: z.string().optional(),
         })
 
-        const { name, email, password } = createUserBody.parse(request.body)
+        const { name, email, password, avatar_url } = createUserBody.parse(request.body)
         const passwordHash = await createHash(fastify, password)
 
         let user = await prisma.user.findUnique({
@@ -81,6 +82,7 @@ export async function authRoutes(fastify: FastifyInstance) {
                     name,
                     email, // Enviar email de confirmação
                     password: passwordHash, // Encripitar a senhas
+                    avatarUrl: avatar_url
                 },
             })
 

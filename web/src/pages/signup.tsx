@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { EnvelopeSimple, User, LockSimple, CaretLeft } from 'phosphor-react'
+import { EnvelopeSimple, User, LockSimple, CaretLeft, Image as ImageIcon } from 'phosphor-react'
 import { toast } from 'react-toastify'
 
 import { useForm } from 'react-hook-form'
@@ -20,13 +20,15 @@ interface FieldValues {
     email: string;
     password: string;
     password_confirmation: string;
+    avatar_url: string;
 }
 
 const createUserSchema = z.object({
     name: z.string().min(6, 'Digite seu nome completo'),
     email: z.string().email('Insira um e-mail válido').min(2),
     password: z.string().min(6, 'Senha muito curta'),
-    password_confirmation: z.string().min(6, 'Senha muito curta')
+    password_confirmation: z.string().min(6, 'Senha muito curta'),
+    avatar_url: z.string().optional(),
 
 }).superRefine(({ password_confirmation, password }, ctx) => {
     if (password_confirmation !== password) {
@@ -79,6 +81,16 @@ export default function() {
                     className="mt-10 flex flex-col gap-4"
                     onSubmit={handleSubmit(createUser)}
                 >
+                    <TextField
+                        type="url"
+                        id="avatar_url"
+                        aria-label="avatar_url"
+                        autoComplete="off"
+                        placeholder="URL"
+                        icon={ImageIcon}
+                        errors={errors}
+                        {...register('avatar_url')}
+                    />
                     <TextField
                         autoFocus
                         type="text"
