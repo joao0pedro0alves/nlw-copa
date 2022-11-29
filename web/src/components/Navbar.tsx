@@ -1,12 +1,22 @@
+import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import logoImg from '../assets/logo.svg'
-
 import { useAuth } from '../hooks/useAuth'
 
 export function Navbar() {
     const { isAuthenticated, user, signOut } = useAuth()
+
+    const router = useRouter()
+
+    const isActive = (pathname: string) => router.pathname === pathname
+
+    const getLinkProps = (href: string) => ({
+        className: clsx("px-2 block", isActive(href) ? 'text-yellow-500 font-bold' : 'text-gray-300'),
+        href
+    })
 
     if (!isAuthenticated) return null
 
@@ -19,22 +29,15 @@ export function Navbar() {
                     <Image src={logoImg} alt="NLW Copa" width={180} />
                 </Link>
 
-                {/* <div className="flex justify-center flex-1 gap-4">
-                    <Link
-                        href="/"
-                        className="text-yellow-500 px-2 block font-bold"
-                    >
+                <div className="flex justify-center flex-1 gap-4">
+                    <Link {...getLinkProps('/')}>
                         Home
                     </Link>
 
-                    <Link href="/ranking" className="text-gray-300 px-2 block">
-                        Ranking
-                    </Link>
-
-                    <Link href="/ranking" className="text-gray-300 px-2 block">
+                    <Link  {...getLinkProps('/games')}>
                         Jogos
                     </Link>
-                </div> */}
+                </div>
 
                 <div className="w-[200px] flex gap-5 justify-end items-center">
                     <button
