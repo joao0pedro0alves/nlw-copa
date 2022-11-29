@@ -28,7 +28,6 @@ export function Pool() {
             setPool(response.data.pool)
 
         } catch (error) {
-            console.log(error)
         }
     }
 
@@ -66,10 +65,10 @@ export function Pool() {
                 </div>
 
                 <div 
-                    className='flex text-white rounded font-bold text-sm border border-gray-700 divide-x-2 divide-gray-600'
+                    className='text-xs md:text-sm flex text-white rounded font-bold border border-gray-700 divide-x-2 divide-gray-600'
                 >
                     <button 
-                        className={clsx('text-xs md:text-md uppercase px-6 py-4 h-12 hover:bg-gray-600', {
+                        className={clsx('uppercase px-6 py-4 h-12 hover:bg-gray-600', {
                             ['bg-gray-600']: activeTab === 'guesses'
                         })}
                         onClick={() => setActiveTab('guesses')}
@@ -79,7 +78,7 @@ export function Pool() {
                     </button>
 
                     <button 
-                        className={clsx('text-xs md:text-md uppercase px-6 py-4 h-12 hover:bg-gray-600', {
+                        className={clsx('uppercase px-6 py-4 h-12 hover:bg-gray-600', {
                             ['bg-gray-600']: activeTab === 'ranking'
                         })}
                         onClick={() => setActiveTab('ranking')}

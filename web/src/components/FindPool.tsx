@@ -43,7 +43,6 @@ export function FindPool({ onJoin }: FindPoolProps) {
             onJoin()
 
         } catch (error) {
-            console.log(error)
             toast.error('Falha ao participar do bolão, tente novamente!')
         } finally {
             setIsLoading(false)

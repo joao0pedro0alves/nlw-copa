@@ -56,7 +56,6 @@ export default function() {
             reset()
 
         } catch (error) {
-            console.log(error)
             toast.error('Falha ao criar o usuário, tente novamente.')
         } finally {
             setIsLoading(false)

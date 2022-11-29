@@ -42,7 +42,6 @@ export function AuthContextProvider({children}: AuthProviderProps) {
             await promptAsync()
 
         } catch (error) {
-            console.log(error)
             throw error
             
         } finally {
@@ -61,7 +60,6 @@ export function AuthContextProvider({children}: AuthProviderProps) {
             setUser(userInfoResponse.data.user)
 
         } catch (error) {
-            console.log(error)
             throw error;
 
         } finally {

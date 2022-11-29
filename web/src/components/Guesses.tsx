@@ -22,8 +22,6 @@ export function Guesses({ poolId }: GuessesProps) {
             const response = await api.get(`/pools/${poolId}/games`)
             setGames(response.data.games)
         } catch (error) {
-            console.log(error)
-
             toast.error('Não foi possível carregar os bolões')
         } finally {
             setIsLoading(false)
@@ -49,7 +47,6 @@ export function Guesses({ poolId }: GuessesProps) {
             toast.success('Palpite realizado com sucesso')
             fetchGames()
         } catch (error) {
-            console.log(error)
             toast.error('Não foi possível enviar o palpite')
         }
     }
@@ -87,7 +84,6 @@ export function Guesses({ poolId }: GuessesProps) {
                             />
                         )
                     })}
-
                 </ul>
             )}
         </div>

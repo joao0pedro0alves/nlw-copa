@@ -26,7 +26,6 @@ export function Home() {
             const response = await api.get('/pools')
             setMyPools(response.data.pools)
         } catch (error) {
-            console.log(error)
         } finally {
             setIsLoading(false)
         }
@@ -55,7 +54,6 @@ export function Home() {
             }
             
         } catch (error) {
-            console.log(error)
         }
     }
 
