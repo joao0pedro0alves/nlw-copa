@@ -6,9 +6,10 @@ import { useAuth } from '../hooks/useAuth'
 
 interface RankingProps {
     participants: Participant[]
+    code: string
 }
 
-export function Ranking({ participants = [], }: RankingProps) {
+export function Ranking({ participants = [], code }: RankingProps) {
     const { user } = useAuth()
 
     return (
@@ -20,7 +21,8 @@ export function Ranking({ participants = [], }: RankingProps) {
                         <span className="text-yellow-500">
                             compartilhar o código
                         </span>{' '}
-                        do bolão com alguém? Use o código JP3640
+                        do bolão com alguém? Use o código{' '} 
+                        <span className="text-yellow-500">{code}</span>.
                     </span>
                 </div>
             ) : (
