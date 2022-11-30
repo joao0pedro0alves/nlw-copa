@@ -34,9 +34,11 @@ export function Navbar() {
                         Home
                     </Link>
 
-                    <Link  {...getLinkProps('/games')}>
-                        Jogos
-                    </Link>
+                    {user.isAdmin && (
+                        <Link  {...getLinkProps('/games')}>
+                            Jogos
+                        </Link>
+                    )}
                 </div>
 
                 <div className="w-[200px] flex gap-5 justify-end items-center">

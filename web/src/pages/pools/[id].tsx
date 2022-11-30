@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import clsx from 'clsx'
 import dayjs from 'dayjs'
@@ -28,6 +29,7 @@ export function Pool() {
             setPool(response.data.pool)
 
         } catch (error) {
+            toast.error('Não foi possivel carregar o bolão')
         }
     }
 
@@ -102,7 +104,8 @@ export function Pool() {
                     className={clsx({['hidden']: activeTab !== 'ranking'})}
                 >
                     <Ranking
-                        participants={pool.participants}
+                        participants={pool?.participants}
+                        code={pool?.code}
                     />
                 </div>
             </section>

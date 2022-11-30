@@ -9,6 +9,7 @@ interface User {
     sub: string
     name: string
     avatarUrl: string
+    isAdmin: boolean
 }
 export interface SignInCredencials {
     email: string;

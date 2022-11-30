@@ -3,15 +3,13 @@ import { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 
 import { prisma } from '../lib/prisma'
-import { authenticate } from '../plugins/authenticate'
+import { authenticate, createJwtToken } from '../plugins/authenticate'
 import { createHash, compareHash } from '../plugins/bcrypt'
 
 export async function authRoutes(fastify: FastifyInstance) {
     fastify.get(
         '/me',
-        {
-            onRequest: [authenticate],
-        },
+        { onRequest: [authenticate] },
         async (request) => {
             return { user: request.user }
         }
@@ -35,17 +33,8 @@ export async function authRoutes(fastify: FastifyInstance) {
             const isValid = await compareHash(fastify, password, user.password)
 
             if (isValid) {
-                const token = fastify.jwt.sign(
-                    {
-                        name: user.name,
-                        avatarUrl: user.avatarUrl,
-                    },
-                    {
-                        sub: user.id, // Quem gerou o token
-                        expiresIn: '7 days',
-                    }
-                )
-
+                const token = createJwtToken(fastify, user)
+                
                 return { token }
             } else {
                 return reply.status(401).send({
@@ -86,16 +75,7 @@ export async function authRoutes(fastify: FastifyInstance) {
                 },
             })
 
-            const token = fastify.jwt.sign(
-                {
-                    name: user.name,
-                    avatarUrl: user.avatarUrl,
-                },
-                {
-                    sub: user.id, // Quem gerou o token
-                    expiresIn: '7 days',
-                }
-            )
+            const token = createJwtToken(fastify, user)
 
             return { token }
         } else {
@@ -147,16 +127,7 @@ export async function authRoutes(fastify: FastifyInstance) {
             })
         }
 
-        const token = fastify.jwt.sign(
-            {
-                name: user.name,
-                avatarUrl: user.avatarUrl,
-            },
-            {
-                sub: user.id, // Quem gerou o token
-                expiresIn: '7 days',
-            }
-        )
+        const token = createJwtToken(fastify, user)
 
         return { token }
     })

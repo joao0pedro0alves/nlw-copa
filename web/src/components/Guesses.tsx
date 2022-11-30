@@ -5,6 +5,7 @@ import { Game as IGame } from '../@types'
 import { api } from '../lib/axios'
 
 import { SoccerLoading } from './helper/SoccerLoading'
+import { GamesFilter } from './GamesFilter'
 import Game from './Game'
 
 interface GuessesProps {
@@ -74,17 +75,24 @@ export function Guesses({ poolId }: GuessesProps) {
                     </span>
                 </div>
             ) : (
-                <ul className='gap-4  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
-                    {games.map(game => {
-                        return (
-                            <Game
-                                key={game.id}
-                                data={game}
-                                onGuessConfirm={handleGuessConfirm}
-                            />
-                        )
-                    })}
-                </ul>
+                <div className='relative'>
+                    <GamesFilter
+                        value='G'
+                        onChange={console.log}
+                    />
+
+                    <ul className='gap-4  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
+                        {games.map(game => {
+                            return (
+                                <Game
+                                    key={game.id}
+                                    data={game}
+                                    onGuessConfirm={handleGuessConfirm}
+                                />
+                            )
+                        })}
+                    </ul>
+                </div>
             )}
         </div>
     )

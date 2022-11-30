@@ -16,12 +16,12 @@ export default function App({ Component, pageProps }: AppProps) {
 
             <ToastContainer
                 transition={Slide}
-                toastClassName='font-bold text-sm'
+                toastClassName='text-sm'
                 icon={false}
-                position="top-right"
+                position="bottom-left"
                 theme="colored"
-                autoClose={4000}
-                hideProgressBar={false}
+                autoClose={3000}
+                hideProgressBar
                 newestOnTop={false}
                 draggable={false}
                 closeOnClick
