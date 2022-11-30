@@ -1,22 +1,33 @@
+import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { Game as IGame, } from '../../@types'
+import { Game as IGame } from '../../@types'
 import { api } from '../../lib/axios'
+import { useAuth } from '../../hooks/useAuth'
 
 import { PrivateRoute } from '../../components/helper/PrivateRoute'
 import { Game } from '../../components/Game'
-import Head from 'next/head'
 
 export function Games() {
     const [games, setGames] = useState<IGame[]>([])
+    const { user } = useAuth()
 
     async function fetchGames() {
-        try {
-            const response = await api.get('/games')
-            setGames(response.data.games)
-
-        } catch (error) {
+        if (user.isAdmin) {
+            try {
+                const response = await api.get('/games')
+                setGames(response.data.games)
+            } catch (error) {
+                toast.error(
+                    'Não foi possível buscar os jogos, tente novamente!'
+                )
+            }
+        } else {
+            toast.error(
+                'Você não tem permissão de contabilizar os jogos, entre em contato com o administrador!',
+                { toastId: 'fetch-games-error' }
+            )
         }
     }
 
