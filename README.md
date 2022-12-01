@@ -248,9 +248,11 @@ As seguintes ferramentas foram usadas na construção do projeto:
 <a href="https://blog.rocketseat.com.br/author/thiago/">
  <img style="border-radius: 50%;" alt="JoaoAlves" title="JoaoAlves" src="https://avatars.githubusercontent.com/u/78969510?v=4" width="100px;" />
  <br />
+ <br />
  <sub><strong>João Alves</strong> 🚀</sub>
 </a>
 
+<br />
 <br />
 
 <a href="https://instagram.com/joaao_alvees" target="_blank"><img src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white" target="_blank"></a>
