@@ -83,6 +83,33 @@ export async function gameRoutes(fastify: FastifyInstance) {
         }
     )
 
+    fastify.post(
+        '/games',
+        { onRequest: [authenticate]},
+        async (request, reply) => {
+            
+            const createGameParams = z.object({
+                category: z.string(),
+                date: z.string(),
+                firstTeamCountryCode: z.string(),
+                secondTeamCountryCode: z.string()
+            })
+
+            const { category, date, firstTeamCountryCode, secondTeamCountryCode } = createGameParams.parse(request.body)
+
+            await prisma.game.create({
+                data: {
+                    category,
+                    date: new Date(date),
+                    firstTeamCountryCode,
+                    secondTeamCountryCode
+                }
+            })
+
+            return reply.status(201).send()
+        }
+    )
+
     fastify.put(
         '/games/:id',
         { onRequest: [authenticate]},
