@@ -12,7 +12,7 @@ import * as z from 'zod'
 import logoImg from '../assets/logo.svg'
 import { api } from '../lib/axios'
 
-import { TextField } from '../components/TextField'
+import { TextField } from '../components/form/TextField'
 import { Button } from '../components/Button'
 
 interface FieldValues {

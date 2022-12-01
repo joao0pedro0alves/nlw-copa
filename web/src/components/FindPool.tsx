@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
 import { Button } from './Button'
-import { TextField } from './TextField'
+import { TextField } from './form/TextField'
 import { api } from '../lib/axios'
 
 interface FindPoolProps {

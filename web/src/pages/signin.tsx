@@ -17,7 +17,7 @@ import { SignInCredencials } from '../contexts/Auth'
 import { useAuth } from '../hooks/useAuth'
 
 import { Avatars } from '../components/Avatars'
-import { TextField } from '../components/TextField'
+import { TextField } from '../components/form/TextField'
 import { Button } from '../components/Button'
 
 interface LoginProps {
