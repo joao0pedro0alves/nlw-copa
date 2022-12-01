@@ -56,6 +56,7 @@ model Game {
   secondTeamCountryCode String
   firstTeamGoals        Int?
   secondTeamGoals       Int?
+  category              String?
 
   guesses Guess[]
 }

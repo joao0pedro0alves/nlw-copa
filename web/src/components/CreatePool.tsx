@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import { SoccerBall } from 'phosphor-react'
 
 import { Button } from './Button'
-import { TextField } from './TextField'
+import { TextField } from './form/TextField'
 import { api } from '../lib/axios'
 
 interface CreatePoolProps {

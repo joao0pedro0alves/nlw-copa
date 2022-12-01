@@ -8,11 +8,19 @@ export async function gameRoutes(fastify: FastifyInstance) {
     fastify.get(
         '/games',
         { onRequest: [authenticate] },
-        async () => {
+        async (request) => {
+            const getGamesParams = z.object({
+                category: z.string().optional(),
+            })
+
+            const { category } = getGamesParams.parse(request.query)
 
             const games = await prisma.game.findMany({
                 orderBy: {
                     date: 'asc'
+                },
+                where: {
+                    category,
                 },
                 select: {
                     id: true,
@@ -36,12 +44,20 @@ export async function gameRoutes(fastify: FastifyInstance) {
             const getPoolParams = z.object({
                 id: z.string(),
             })
+            
+            const getPoolQueryParams = z.object({
+                category: z.string().optional()
+            })
 
             const { id } = getPoolParams.parse(request.params)
+            const { category } = getPoolQueryParams.parse(request.query)
 
             const games = await prisma.game.findMany({
                 orderBy: {
                     date: 'desc',
+                },
+                where: {
+                    category
                 },
                 include: {
                     guesses: {
@@ -64,6 +80,33 @@ export async function gameRoutes(fastify: FastifyInstance) {
                     }
                 }),
             }
+        }
+    )
+
+    fastify.post(
+        '/games',
+        { onRequest: [authenticate]},
+        async (request, reply) => {
+            
+            const createGameParams = z.object({
+                category: z.string(),
+                date: z.string(),
+                firstTeamCountryCode: z.string(),
+                secondTeamCountryCode: z.string()
+            })
+
+            const { category, date, firstTeamCountryCode, secondTeamCountryCode } = createGameParams.parse(request.body)
+
+            await prisma.game.create({
+                data: {
+                    category,
+                    date: new Date(date),
+                    firstTeamCountryCode,
+                    secondTeamCountryCode
+                }
+            })
+
+            return reply.status(201).send()
         }
     )
 

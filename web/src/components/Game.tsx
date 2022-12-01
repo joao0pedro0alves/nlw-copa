@@ -68,8 +68,8 @@ export function Game({
     }, [data.guess])
 
     return (
-        <li className="w-full bg-gray-800 rounded flex flex-col items-center p-4">
-            <h3 className="text-gray-100 font-bold text-md leading-relaxed max-w-[300px] whitespace-nowrap overflow-hidden overflow-ellipsis">
+        <li className="w-full bg-gray-800 rounded flex flex-col items-center p-4 overflow-hidden">
+            <h3 className="text-gray-100 font-bold text-md leading-relaxed whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[200px] sm:max-w-[300px]">
                 {getCountryName(data.firstTeamCountryCode)} vs.{' '}
                 {getCountryName(data.secondTeamCountryCode)}
             </h3>
