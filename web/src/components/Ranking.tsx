@@ -1,15 +1,18 @@
 import clsx from 'clsx'
-import { CrownSimple } from 'phosphor-react'
+import { CrownSimple, Calculator } from 'phosphor-react'
 
 import { Participant } from '../@types'
 import { useAuth } from '../hooks/useAuth'
 
+import { Tooltip } from './helper/Tooltip'
+
 interface RankingProps {
     participants: Participant[]
     code: string
+    onCalculate: (userId: string) => Promise<void>
 }
 
-export function Ranking({ participants = [], code }: RankingProps) {
+export function Ranking({ participants = [], code, onCalculate }: RankingProps) {
     const { user } = useAuth()
 
     return (
@@ -73,16 +76,29 @@ export function Ranking({ participants = [], code }: RankingProps) {
                                         {participant.amountPoints} ponto(s)
                                     </span>
                                 </div>
+                                
+                                <div className='flex gap-6 items-center'>
 
-                                <div 
-                                    className={clsx(
-                                        'px-4 py-1 rounded-3xl',
-                                        isFinalist ? 'bg-yellow-500 text-gray-900' : 'bg-gray-600 text-gray-300'
+                                    {user.isAdmin && (
+                                        <Tooltip title='Calcular pontos'>
+                                            <button 
+                                                className="text-gray-100 text-2xl w-12 h-12 rounded-full bg-gray-600 flex items-center justify-center hover:bg-yellow-500 hover:text-gray-900 transition-colors"
+                                                onClick={() => onCalculate(participant.user?.id)}
+                                            >
+                                                <Calculator weight="bold" />
+                                            </button>
+                                        </Tooltip>
                                     )}
-                                >
-                                    <span className='font-bold text-sm md:text-md lg:text-lg'>
-                                        {index + 1}º
-                                    </span>
+                                    <div 
+                                        className={clsx(
+                                            'px-4 py-1 rounded-3xl',
+                                            isFinalist ? 'bg-yellow-500 text-gray-900' : 'bg-gray-600 text-gray-300'
+                                        )}
+                                    >
+                                        <span className='font-bold text-sm md:text-md lg:text-lg'>
+                                            {index + 1}º
+                                        </span>
+                                    </div>
                                 </div>
 
                             </li>
