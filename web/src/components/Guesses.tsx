@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { Game as IGame } from '../@types'
 import { api } from '../lib/axios'
 
-import { GamesFilter, GameCategory } from './GamesFilter'
+import { GamesHeader, GameCategory } from './GamesHeader'
 import Game from './Game'
 
 interface GuessesProps {
@@ -59,7 +59,7 @@ export function Guesses({ poolId }: GuessesProps) {
 
     return (
         <div className="bg-gray-900/20 rounded-lg p-4 mt-4 md:mt-14 max-h-[600px] overflow-auto apply-custom-scrollbar">
-            <GamesFilter 
+            <GamesHeader 
                 value={category} 
                 onChange={setCategory} 
             />

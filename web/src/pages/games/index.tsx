@@ -1,13 +1,15 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import * as Dialog from '@radix-ui/react-dialog'
 
 import { Game as IGame } from '../../@types'
 import { api } from '../../lib/axios'
 import { useAuth } from '../../hooks/useAuth'
 
 import { PrivateRoute } from '../../components/helper/PrivateRoute'
-import { GamesFilter, GameCategory } from '../../components/GamesFilter'
+import { CreateGame } from '../../components/CreateGame'
+import { GamesHeader, GameCategory } from '../../components/GamesHeader'
 import { Game } from '../../components/Game'
 
 export function Games() {
@@ -73,7 +75,16 @@ export function Games() {
             </Head>
 
             <section className="bg-gray-900/20 rounded-lg p-4">
-                <GamesFilter value={category} onChange={setCategory} />
+                <Dialog.Root>
+                    <GamesHeader 
+                        value={category} 
+                        onChange={setCategory}
+                        showAddButton
+                    />
+                    <CreateGame 
+                        onCreate={fetchGames}
+                    />
+                </Dialog.Root>
 
                 {games.length === 0 ? (
                     <div className="text-center py-2">
