@@ -58,7 +58,7 @@ export function Guesses({ poolId }: GuessesProps) {
     }, [poolId, category])
 
     return (
-        <div className="bg-gray-900/20 rounded-lg p-4 mt-4 md:mt-14 max-h-[600px] overflow-auto apply-custom-scrollbar">
+        <div className="bg-gray-900/20 rounded-lg p-4 mt-4 md:mt-14 sm:max-h-[600px] sm:overflow-auto apply-custom-scrollbar">
             <GamesHeader 
                 value={category} 
                 onChange={setCategory} 

@@ -15,7 +15,7 @@ export function GamesHeader({value = 'G', showAddButton, onChange}: GamesHeaderP
     const getButtonProps = (category: GameCategory) => ({
         onClick: () => onChange(category),
         className: clsx(
-            'flex items-center rounded justify-center h-10 p-4 text-sm transition-all',
+            'flex items-center rounded justify-center h-10 p-4 text-xs transition-all whitespace-nowrap sm:text-sm',
             value === category
                 ? 'bg-green-500 font-bold hover:bg-green-600'
                 : 'bg-gray-600 text-gray-300 hover:bg-gray-600/50'
@@ -23,7 +23,7 @@ export function GamesHeader({value = 'G', showAddButton, onChange}: GamesHeaderP
     })
 
     return (
-        <div className="bg-gray-800 border-b border-gray-600 p-4 mb-4 flex justify-between">  
+        <div className="bg-gray-800 border-b border-gray-600 p-4 mb-4 flex justify-between overflow-auto">
 
             <div className='flex gap-2'>
                 <button {...getButtonProps('G')}>Fase de grupos</button>

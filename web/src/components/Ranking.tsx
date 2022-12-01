@@ -16,7 +16,7 @@ export function Ranking({ participants = [], code, onCalculate }: RankingProps) 
     const { user } = useAuth()
 
     return (
-        <div className="bg-gray-900/20 rounded-lg p-4 mt-4 md:mt-14 mx-auto max-h-[600px] overflow-auto apply-custom-scrollbar">
+        <div className="bg-gray-900/20 rounded-lg p-4 mt-4 md:mt-14 mx-auto sm:max-h-[600px] sm:overflow-auto apply-custom-scrollbar">
             {participants.length === 0 ? (
                 <div className="text-center">
                     <span className="text-gray-300">
@@ -82,7 +82,7 @@ export function Ranking({ participants = [], code, onCalculate }: RankingProps) 
                                     {user.isAdmin && (
                                         <Tooltip title='Calcular pontos'>
                                             <button 
-                                                className="text-gray-100 text-2xl w-12 h-12 rounded-full bg-gray-600 flex items-center justify-center hover:bg-yellow-500 hover:text-gray-900 transition-colors"
+                                                className="text-gray-100 text-2xl w-12 h-12 rounded-full bg-gray-600 hidden md:flex items-center justify-center hover:bg-yellow-500 hover:text-gray-900 transition-colors"
                                                 onClick={() => onCalculate(participant.user?.id)}
                                             >
                                                 <Calculator weight="bold" />
@@ -91,7 +91,7 @@ export function Ranking({ participants = [], code, onCalculate }: RankingProps) 
                                     )}
                                     <div 
                                         className={clsx(
-                                            'px-4 py-1 rounded-3xl',
+                                            'px-4 py-1 flex items-center justify-center rounded-3xl',
                                             isFinalist ? 'bg-yellow-500 text-gray-900' : 'bg-gray-600 text-gray-300'
                                         )}
                                     >
