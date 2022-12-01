@@ -36,6 +36,8 @@ export function Ranking({ participants = [], code, onCalculate }: RankingProps) 
                         const isChampion = ranking === 1
                         const isFinalist = ranking < 4
 
+                        const isMe = user.sub === participant.user.id
+
                         return (
                             <li 
                                 className="bg-gray-800 rounded border-b-2 border-yellow-500 py-4 px-4 flex gap-6 items-center"
@@ -68,7 +70,7 @@ export function Ranking({ participants = [], code, onCalculate }: RankingProps) 
                                     <span className='block text-sm md:text-md lg:text-lg font-bold text-white'>
                                         {participant.user.name}
 
-                                        {user.sub === participant.user.id && (
+                                        {isMe && (
                                             <span className='ml-2 font-normal text-gray-300 text-sm'>(você)</span>
                                         )}
                                     </span>
@@ -79,7 +81,7 @@ export function Ranking({ participants = [], code, onCalculate }: RankingProps) 
                                 
                                 <div className='flex gap-6 items-center'>
 
-                                    {user.isAdmin && (
+                                    {(isMe || user.isAdmin) && (
                                         <Tooltip title='Calcular pontos'>
                                             <button 
                                                 className="text-gray-100 text-2xl w-12 h-12 rounded-full bg-gray-600 hidden md:flex items-center justify-center hover:bg-yellow-500 hover:text-gray-900 transition-colors"
