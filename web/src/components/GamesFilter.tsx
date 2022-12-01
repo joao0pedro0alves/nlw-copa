@@ -24,7 +24,7 @@ export function GamesFilter({value = 'G', onChange}: GamesFilterProps) {
             <button {...getButtonProps('G')}>Fase de grupos</button>
             <button {...getButtonProps('O')}>Oitavas</button>
             <button {...getButtonProps('Q')}>Quartas</button>
-            <button {...getButtonProps('S')}>Semifinal</button>
+            <button {...getButtonProps('S')}>Semifinais</button>
             <button {...getButtonProps('F')}>Final</button>
         </div>
     )
