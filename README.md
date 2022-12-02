@@ -245,7 +245,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 ## 🦸 Author
 
-<a href="https://blog.rocketseat.com.br/author/thiago/">
+<a href="https://github.com/joao0pedro0alves">
  <img style="border-radius: 50%;" alt="JoaoAlves" title="JoaoAlves" src="https://avatars.githubusercontent.com/u/78969510?v=4" width="100px;" />
  <br />
  <br />
