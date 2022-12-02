@@ -10,6 +10,7 @@ export function Navbar() {
     const { isAuthenticated, user, signOut } = useAuth()
 
     const router = useRouter()
+    const hidden = router.query.nav === '0'
 
     const isActive = (pathname: string) => router.pathname === pathname
 
@@ -18,7 +19,7 @@ export function Navbar() {
         href
     })
 
-    if (!isAuthenticated) return null
+    if (!isAuthenticated || hidden) return null
 
     return (
         <nav className="bg-gray-900 md:bg-gray-900/40 border-b border-gray-800 fixed top-0 w-full px-4">

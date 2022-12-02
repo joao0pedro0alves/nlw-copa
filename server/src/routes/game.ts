@@ -38,6 +38,58 @@ export async function gameRoutes(fastify: FastifyInstance) {
     )
 
     fastify.get(
+        '/pools/:id/games/guesses',
+        { onRequest: [authenticate] },
+        async (request) => {
+            const getPoolParams = z.object({
+                id: z.string(),
+            })
+            
+            const getPoolQueryParams = z.object({
+                category: z.string().optional()
+            })
+
+            const { id } = getPoolParams.parse(request.params)
+            const { category } = getPoolQueryParams.parse(request.query)
+
+            const games = await prisma.game.findMany({
+                orderBy: {
+                    date: 'asc',
+                },
+                where: {
+                    category
+                },
+                include: {
+                    guesses: {
+                        where: {
+                            participant: {
+                                poolId: id,
+                            },
+                        },
+                        include: {
+                            participant: {
+                                select: {
+                                    id: true,
+                                    amountPoints: true,
+                                    user: {
+                                        select: {
+                                            id: true,
+                                            avatarUrl: true,
+                                            name: true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                },
+            })
+
+            return { games }
+        }
+    )
+
+    fastify.get(
         '/pools/:id/games',
         { onRequest: [authenticate] },
         async (request) => {

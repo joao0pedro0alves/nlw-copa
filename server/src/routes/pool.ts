@@ -107,12 +107,13 @@ export async function poolRoutes(fastify: FastifyInstance) {
             })
 
             const { id, participantUserId } = getPoolParams.parse(request.params)
+            const userId = participantUserId || request.user.sub
 
             const participant = await prisma.participant.findUnique({
                 where: {
                     userId_poolId: {
                         poolId: id,
-                        userId: participantUserId || request.user.sub
+                        userId: userId
                     },
                 },
                 include: {
@@ -127,7 +128,7 @@ export async function poolRoutes(fastify: FastifyInstance) {
                         where: {
                             userId_poolId: {
                                 poolId: id,
-                                userId: request.user.sub
+                                userId
                             }
                         },
                         data: {
