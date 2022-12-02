@@ -57,7 +57,10 @@ export async function gameRoutes(fastify: FastifyInstance) {
                     date: 'asc',
                 },
                 where: {
-                    category
+                    category,
+                    date: {
+                        lt: new Date()
+                    }
                 },
                 include: {
                     guesses: {
