@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CountryFlag from 'react-country-flag'
 
+import clsx from 'clsx'
 import dayjs from 'dayjs'
 import ptBR from 'dayjs/locale/pt-br'
 
@@ -32,6 +33,15 @@ interface GameWithGuesses {
 interface GuessesTableProps {
     poolId: string
 }
+
+type Result = 'draw' | 'firstTeamWinner' | 'secondTeamWinner'
+
+function getResult(firstTeamPoints: number, secondTeamPoints: number): Result {
+    if (firstTeamPoints === secondTeamPoints) return 'draw'
+    else if (firstTeamPoints > secondTeamPoints) return 'firstTeamWinner'
+    else return 'secondTeamWinner'
+}
+
 
 function distinct<T>(anyList: T[]): T[] {
     return anyList.filter((value, index) => {
@@ -187,9 +197,26 @@ export function GuessesTable({ poolId }: GuessesTableProps) {
                                     g => g.participant.id === participant.id
                                 )
 
+                                const guessResult = guess && getResult(guess?.firstTeamPoints, guess?.secondTeamPoints)
+                                const gameResult = getResult(game.firstTeamGoals as number, game.secondTeamGoals as number)
+
+                                const hitScore = 
+                                    game?.firstTeamGoals === guess?.firstTeamPoints &&
+                                    game?.secondTeamGoals === guess?.secondTeamPoints
+
+                                const hitResult = guessResult === gameResult
+
                                 return (
                                     <td align='center' key={participant.id}>
-                                        <span className="font-bold text-sm text-gray-100">
+                                        <span className={clsx(
+                                            "font-bold text-sm",
+                                            {
+                                                ['text-gray-100']: !hitScore && !hitResult,
+                                                ['text-yellow-500']: hitResult && !hitScore,
+                                                ['text-green-500']: hitScore,
+                                            }
+
+                                        )}>
                                             {guess?.firstTeamPoints} x{' '}
                                             {guess?.secondTeamPoints}
                                         </span>
