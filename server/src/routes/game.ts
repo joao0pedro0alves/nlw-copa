@@ -60,6 +60,12 @@ export async function gameRoutes(fastify: FastifyInstance) {
                     category,
                     date: {
                         lt: new Date()
+                    },
+                    firstTeamGoals: {
+                        not: null,
+                    },
+                    secondTeamGoals: {
+                        not: null,
                     }
                 },
                 include: {
