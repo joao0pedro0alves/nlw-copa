@@ -11,6 +11,8 @@ import { poolRoutes } from './routes/pool'
 import { userRoutes } from './routes/user'
 
 dotenv.config()
+// console.log('Loaded enviroment variables...')
+// console.log(process.env)
 
 async function bootstrap() {
     const fastify = Fastify({
