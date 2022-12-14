@@ -68,11 +68,11 @@ export async function guessRoutes(fastify: FastifyInstance) {
                 })
             }
 
-            if (game.date < new Date()) {
-                return reply.status(400).send({
-                    message: 'You cannot send guesses after the game date.',
-                })
-            }
+            // if (game.date < new Date()) {
+            //     return reply.status(400).send({
+            //         message: 'You cannot send guesses after the game date.',
+            //     })
+            // }
 
             await prisma.guess.create({
                 data: {
